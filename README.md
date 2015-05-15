@@ -25,7 +25,7 @@ Get the path to a certain device operating system image in the cache. If the ima
 
 **Note:** For technical limitations that are currently being solved, you can only download a device image if you have an application created for that device type in your account.
 
-The `deviceManifest` is an object containing a valid device slug property. Official manifests are used internally at Resin.io and will be released to the public soon.
+A device manifest is an object that can be obtained from the [Resin SDK](https://github.com/resin-io/resin-sdk).  Please refer to the documentation for more details.
 
 The callback gets passed two arguments `(error, path)`.
 
