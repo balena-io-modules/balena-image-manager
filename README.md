@@ -5,7 +5,7 @@ resin-image-manager
 [![dependencies](https://david-dm.org/resin-io/resin-image-manager.png)](https://david-dm.org/resin-io/resin-image-manager.png)
 [![Build Status](https://travis-ci.org/resin-io/resin-image-manager.svg?branch=master)](https://travis-ci.org/resin-io/resin-image-manager)
 
-Manage fetching device images with caching support.
+Manage fetching and configuring device images with caching support.
 
 Installation
 ------------
@@ -41,6 +41,33 @@ manager.get {
 }, (error, path) ->
 	throw error if error?
 	console.log("The image lives in #{path}")
+, (state) ->
+	console.log(state)
+```
+
+### manager.configure(Object deviceManifest, Object config, Function callback, Function onProgress)
+
+Configure a device image and return a path to it. If a unconfigured image doesn't not exist in the cache, or the existing image is not fresh enough, re-download it.
+
+The callback gets passed three arguments `(error, path, removeCallback)`.
+
+The `removeCallback` is a function that when called, removes the temporal configured image file.
+
+```coffee
+manager = require('resin-image-manager')
+
+manager.configure {
+	slug: 'raspberry-pi'
+}, {
+	hello: 'world'
+}, (error, path, removeCallback) ->
+	throw error if error?
+	console.log("The image lives in #{path}")
+
+	removeCallback (error) ->
+		throw error if error?
+		console.log('The configured temporal image was removed')
+
 , (state) ->
 	console.log(state)
 ```
