@@ -42,7 +42,7 @@
     "fs-extra": "^0.18.3",
     "lodash": "^3.8.0",
     "mkdirp": "^0.5.1",
-    "resin-config-inject": "^2.0.0",
+    "resin-config-inject": "^3.0.0",
     "resin-sdk": "^1.4.3",
     "tmp": "0.0.26",
     "user-home": "^1.1.1"
