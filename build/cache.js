@@ -19,7 +19,12 @@ settings = require('./settings');
  */
 
 exports.getImagePath = function(deviceType) {
-  return path.join(settings.cacheDirectory, "" + deviceType + ".img");
+  var extension;
+  extension = 'img';
+  if (deviceType === 'intel-edison') {
+    extension = 'zip';
+  }
+  return path.join(settings.cacheDirectory, "" + deviceType + "." + extension);
 };
 
 
