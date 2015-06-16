@@ -22,10 +22,25 @@ describe 'Cache:', ->
 			result = cache.getImagePath('foo')
 			expect(isAbsolute(result)).to.be.true
 
-		it 'should have an extension equal to img', ->
-			result = cache.getImagePath('foo')
-			extension = path.extname(result)
-			expect(extension).to.equal('.img')
+		describe 'given device type is edison', ->
+
+			beforeEach ->
+				@deviceType = 'intel-edison'
+
+			it 'should have an extension equal to zip', ->
+				result = cache.getImagePath(@deviceType)
+				extension = path.extname(result)
+				expect(extension).to.equal('.zip')
+
+		describe 'given device type is not edison', ->
+
+			beforeEach ->
+				@deviceType = 'raspberry-pi'
+
+			it 'should have an extension equal to img', ->
+				result = cache.getImagePath(@deviceType)
+				extension = path.extname(result)
+				expect(extension).to.equal('.img')
 
 	describe '.isImageFresh()', ->
 

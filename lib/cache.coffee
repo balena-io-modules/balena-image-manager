@@ -13,7 +13,10 @@ settings = require('./settings')
 # path = cache.getImagePath('raspberry-pi')
 ###
 exports.getImagePath = (deviceType) ->
-	return path.join(settings.cacheDirectory, "#{deviceType}.img")
+	extension = 'img'
+	if deviceType is 'intel-edison'
+		extension = 'zip'
+	return path.join(settings.cacheDirectory, "#{deviceType}.#{extension}")
 
 ###*
 # @summary Determine if a device image is fresh
