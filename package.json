@@ -1,0 +1,50 @@
+{
+  "name": "resin-image-manager",
+  "version": "3.0.0",
+  "description": "Manage device base operating systems resources with caching support",
+  "main": "build/manager.js",
+  "homepage": "https://github.com/resin-io/resin-image-manager",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/resin-io/resin-image-manager.git"
+  },
+  "keywords": [
+    "resin",
+    "image",
+    "manager",
+    "os",
+    "device"
+  ],
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "gulp test",
+    "prepublish": "gulp build",
+    "readme": "jsdoc2md --template doc/README.hbs build/manager.js > README.md"
+  },
+  "author": "Juan Cruz Viotti <juanchiviotti@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "coffee-script": "^1.9.3",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-coffeelint": "^0.5.0",
+    "gulp-mocha": "^2.1.2",
+    "gulp-util": "~3.0.1",
+    "jsdoc-to-markdown": "^1.1.1",
+    "mocha": "^2.2.5",
+    "mochainon": "^1.0.0",
+    "mock-fs": "^3.0.0",
+    "nock": "^2.6.0",
+    "string-to-stream": "^1.0.1",
+    "tmp": "0.0.26"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.30",
+    "lodash": "^3.10.0",
+    "mkdirp": "^0.5.1",
+    "resin-sdk": "^2.1.0",
+    "rimraf": "^2.4.1"
+  }
+}
