@@ -140,9 +140,9 @@ describe 'Cache:', ->
 				@cacheGetImagePathStub = m.sinon.stub(cache, 'getImagePath')
 				@cacheGetImagePathStub.returns(Promise.resolve(@image.name))
 
-			afterEach ->
+			afterEach (done) ->
 				@cacheGetImagePathStub.restore()
-				@image.removeCallback()
+				fs.unlink(@image.name, done)
 
 			it 'should return a stream to the image', (done) ->
 				cache.getImage('lorem-ipsum').then (stream) ->
@@ -169,9 +169,9 @@ describe 'Cache:', ->
 				@cacheGetImagePathStub = m.sinon.stub(cache, 'getImagePath')
 				@cacheGetImagePathStub.returns(Promise.resolve(@image.name))
 
-			afterEach ->
+			afterEach (done) ->
 				@cacheGetImagePathStub.restore()
-				@image.removeCallback()
+				fs.unlink(@image.name, done)
 
 			it 'should return a writable stream', (done) ->
 				cache.getImageWritableStream('raspberry-pi').then (stream) ->
