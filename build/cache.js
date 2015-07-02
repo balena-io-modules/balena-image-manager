@@ -54,7 +54,12 @@ utils = require('./utils');
 
 exports.getImagePath = function(slug) {
   return resin.settings.get('cacheDirectory').then(function(cacheDirectory) {
-    return path.join(cacheDirectory, slug + ".img");
+    var extension;
+    extension = 'img';
+    if (slug === 'intel-edison') {
+      extension = 'zip';
+    }
+    return path.join(cacheDirectory, slug + "." + extension);
   });
 };
 

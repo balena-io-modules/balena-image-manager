@@ -47,6 +47,11 @@ describe 'Cache:', ->
 					imagePath = '/Users/johndoe/.resin/cache/raspberry-pi.img'
 					m.chai.expect(promise).to.eventually.equal(imagePath)
 
+			it 'should use a zip extension for directory images', (done) ->
+				cache.getImagePath('intel-edison').then (imagePath) ->
+					m.chai.expect(path.extname(imagePath)).to.equal('.zip')
+				.nodeify(done)
+
 	describe '.isImageFresh()', ->
 
 		describe 'given no cacheDirectory setting', ->
