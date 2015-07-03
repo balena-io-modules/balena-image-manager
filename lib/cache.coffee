@@ -44,7 +44,14 @@ utils = require('./utils')
 ###
 exports.getImagePath = (slug) ->
 	resin.settings.get('cacheDirectory').then (cacheDirectory) ->
-		return path.join(cacheDirectory, "#{slug}.img")
+		extension = 'img'
+
+		# Hardcode zip extension for intel edison for now.
+		# In the future, we will look for the device manifest
+		# of the given slug and determine if zip = true.
+		extension = 'zip' if slug is 'intel-edison'
+
+		return path.join(cacheDirectory, "#{slug}.#{extension}")
 
 ###*
 # @summary Determine if a device image is fresh
