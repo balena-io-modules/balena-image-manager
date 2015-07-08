@@ -29,16 +29,16 @@ Documentation
 
 
 * [manager](#module_manager)
-  * [.get(slug)](#module_manager.get) ⇒ <code>ReadStream</code>
+  * [.get(slug)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
   * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
 
 <a name="module_manager.get"></a>
-### manager.get(slug) ⇒ <code>ReadStream</code>
+### manager.get(slug) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
 This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
 
 **Kind**: static method of <code>[manager](#module_manager)</code>  
 **Summary**: Get a device operating system image  
-**Returns**: <code>ReadStream</code> - image readable stream  
+**Returns**: <code>Promise.&lt;ReadStream&gt;</code> - image readable stream  
 **Access:** public  
 
 | Param | Type | Description |

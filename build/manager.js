@@ -42,7 +42,7 @@ image = require('./image');
  * This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
  *
  * @param {String} slug - device type slug
- * @returns {ReadStream} image readable stream
+ * @returns {Promise<ReadStream>} image readable stream
  *
  * @example
  * manager.get('raspberry-pi').then (stream) ->
