@@ -49,17 +49,26 @@ resin = require('resin-sdk');
 
 exports.getOSParameters = function(slug) {
   return resin.models.application.getAll().then(function(applications) {
-    var application;
+    var application, result;
     application = _.find(applications, {
       device_type: slug
     });
     if (application == null) {
       throw new Error("Unknown device type: " + slug);
     }
-    return {
+    result = {
       network: 'ethernet',
       appId: application.id
     };
+    if (slug === 'parallella') {
+      result.processorType = 'Z7010';
+      result.coprocessorCore = '16';
+    } else if (slug === 'intel-edison') {
+      result.network = 'wifi';
+      result.wifiSsid = 'ssid';
+      result.wifiKey = 'key';
+    }
+    return result;
   });
 };
 

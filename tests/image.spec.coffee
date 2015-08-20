@@ -15,6 +15,7 @@ describe 'Image:', ->
 				@resinApplicationGetAllStub.returns Promise.resolve [
 					{ id: 1, device_type: 'raspberry-pi' }
 					{ id: 2, device_type: 'intel-edison' }
+					{ id: 3, device_type: 'parallella' }
 				]
 
 			afterEach ->
@@ -34,11 +35,48 @@ describe 'Image:', ->
 			describe 'given it does not have an app of the required type', ->
 
 				beforeEach ->
-					@deviceType = 'parallela'
+					@deviceType = 'foo'
 
 				it 'should be rejected with an error message', ->
 					promise = image.getOSParameters(@deviceType)
 					m.chai.expect(promise).to.be.rejectedWith("Unknown device type: #{@deviceType}")
+
+			describe 'given a raspberry pi device type', ->
+
+				beforeEach ->
+					@deviceType = 'raspberry-pi'
+
+				it 'should contain all required parameters', ->
+					promise = image.getOSParameters(@deviceType)
+					m.chai.expect(promise).to.become
+						appId: 1
+						network: 'ethernet'
+
+			describe 'given an edison device type', ->
+
+				beforeEach ->
+					@deviceType = 'intel-edison'
+
+				it 'should contain all required parameters', ->
+					promise = image.getOSParameters(@deviceType)
+					m.chai.expect(promise).to.become
+						appId: 2
+						network: 'wifi'
+						wifiSsid: 'ssid'
+						wifiKey: 'key'
+
+			describe 'given a parallella device type', ->
+
+				beforeEach ->
+					@deviceType = 'parallella'
+
+				it 'should contain all required parameters', ->
+					promise = image.getOSParameters(@deviceType)
+					m.chai.expect(promise).to.become
+						appId: 3
+						network: 'ethernet'
+						processorType: 'Z7010'
+						coprocessorCore: '16'
 
 	describe '.download()', ->
 
