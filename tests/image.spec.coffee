@@ -2,6 +2,7 @@ m = require('mochainon')
 Promise = require('bluebird')
 nock = require('nock')
 resin = require('resin-sdk')
+fixtures = require('./fixtures/tokens.json')
 image = require('../lib/image')
 
 describe 'Image:', ->
@@ -61,39 +62,50 @@ describe 'Image:', ->
 
 			describe 'given the desired device type is valid', ->
 
-				describe 'given a valid download endpoint', ->
+				describe 'given an always valid whoami endpoint', ->
 
 					beforeEach (done) ->
 						resin.settings.get('remoteUrl').then (remoteUrl) ->
-							nock(remoteUrl).get('/download?network=ethernet&appId=1')
-								.reply(200, 'Lorem ipsum dolor sit amet')
+							nock(remoteUrl).get('/whoami')
+								.reply(200, fixtures.johndoe.token)
 							done()
 
 					afterEach ->
 						nock.cleanAll()
 
-					it 'should stream the download', (done) ->
-						image.download('raspberry-pi').then (stream) ->
-							result = ''
+					describe 'given a valid download endpoint', ->
 
-							stream.on 'data', (chunk) ->
-								result += chunk
-
-							stream.on 'end', ->
-								m.chai.expect(result).to.equal('Lorem ipsum dolor sit amet')
+						beforeEach (done) ->
+							resin.settings.get('remoteUrl').then (remoteUrl) ->
+								nock(remoteUrl).get('/download?network=ethernet&appId=1')
+									.reply(200, 'Lorem ipsum dolor sit amet')
 								done()
 
-				describe 'given an invalid download endpoint', ->
+						afterEach ->
+							nock.cleanAll()
 
-					beforeEach (done) ->
-						resin.settings.get('remoteUrl').then (remoteUrl) ->
-							nock(remoteUrl).get('/download?network=ethernet&appId=1')
-								.reply(400, 'Invalid application id')
-							done()
+						it 'should stream the download', (done) ->
+							image.download('raspberry-pi').then (stream) ->
+								result = ''
 
-					afterEach ->
-						nock.cleanAll()
+								stream.on 'data', (chunk) ->
+									result += chunk
 
-					it 'should be rejected with an error message', ->
-						promise = image.download('raspberry-pi')
-						m.chai.expect(promise).to.be.rejectedWith('Invalid application id')
+								stream.on 'end', ->
+									m.chai.expect(result).to.equal('Lorem ipsum dolor sit amet')
+									done()
+
+					describe 'given an invalid download endpoint', ->
+
+						beforeEach (done) ->
+							resin.settings.get('remoteUrl').then (remoteUrl) ->
+								nock(remoteUrl).get('/download?network=ethernet&appId=1')
+									.reply(400, 'Invalid application id')
+								done()
+
+						afterEach ->
+							nock.cleanAll()
+
+						it 'should be rejected with an error message', ->
+							promise = image.download('raspberry-pi')
+							m.chai.expect(promise).to.be.rejectedWith('Invalid application id')
