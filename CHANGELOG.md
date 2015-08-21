@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2015-08-21
+
+### Added
+
+- Correctly mock os parameters for different device types.
+
+### Changed
+
+- Fix issue when piping the same stream to both the cache and the client .
+- Upgrade Resin SDK to v2.4.1.
+- Fix unit tests failing because of unmocked `GET /whoami` endpoint.
+
 ## [3.0.0] - 2015-07-01
 
 ### Added
