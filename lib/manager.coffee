@@ -26,6 +26,7 @@ THE SOFTWARE.
 # @module manager
 ###
 
+stream = require('stream')
 cache = require('./cache')
 image = require('./image')
 
@@ -50,11 +51,18 @@ exports.get = (slug) ->
 
 		image.download(slug).then (imageStream) ->
 
+			# Piping to a PassThrough stream is needed to be able
+			# to then pipe the stream to multiple destinations.
+			pass = new stream.PassThrough()
+			imageStream.pipe(pass)
+			imageStream.on 'progress', (state) ->
+				pass.emit('progress', state)
+
 			# Save a copy of the image in the cache
 			cache.getImageWritableStream(slug).then (cacheStream) ->
-				imageStream.pipe(cacheStream)
+				pass.pipe(cacheStream)
 
-				return imageStream
+				return pass
 
 ###*
 # @summary Clean the saved images cache

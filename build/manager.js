@@ -26,7 +26,9 @@ THE SOFTWARE.
 /**
  * @module manager
  */
-var cache, image;
+var cache, image, stream;
+
+stream = require('stream');
 
 cache = require('./cache');
 
@@ -55,9 +57,15 @@ exports.get = function(slug) {
       return cache.getImage(slug);
     }
     return image.download(slug).then(function(imageStream) {
+      var pass;
+      pass = new stream.PassThrough();
+      imageStream.pipe(pass);
+      imageStream.on('progress', function(state) {
+        return pass.emit('progress', state);
+      });
       return cache.getImageWritableStream(slug).then(function(cacheStream) {
-        imageStream.pipe(cacheStream);
-        return imageStream;
+        pass.pipe(cacheStream);
+        return pass;
       });
     });
   });
