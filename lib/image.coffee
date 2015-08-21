@@ -49,10 +49,19 @@ exports.getOSParameters = (slug) ->
 		if not application?
 			throw new Error("Unknown device type: #{slug}")
 
-		return {
+		result =
 			network: 'ethernet'
 			appId: application.id
-		}
+
+		if slug is 'parallella'
+			result.processorType = 'Z7010'
+			result.coprocessorCore = '16'
+		else if slug is 'intel-edison'
+			result.network = 'wifi'
+			result.wifiSsid = 'ssid'
+			result.wifiKey = 'key'
+
+		return result
 
 ###*
 # @summary Download a device image
