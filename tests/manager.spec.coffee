@@ -93,3 +93,20 @@ describe 'Manager:', ->
 							pass.on 'end', ->
 								m.chai.expect(result).to.equal('Download image')
 								done()
+
+				describe 'given a stream with a length property', ->
+
+					beforeEach ->
+						@imageDownloadStub = m.sinon.stub(image, 'download')
+						message = 'Lorem ipsum dolor sit amet'
+						stream = stringToStream(message)
+						stream.length = message.length
+						@imageDownloadStub.returns(Promise.resolve(stream))
+
+					afterEach ->
+						@imageDownloadStub.restore()
+
+					it 'should preserve the property', (done) ->
+						manager.get('raspberry-pi').then (stream) ->
+							m.chai.expect(stream.length).to.equal(26)
+						.nodeify(done)
