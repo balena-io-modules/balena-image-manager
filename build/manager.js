@@ -64,8 +64,14 @@ exports.get = function(slug) {
         return pass.emit('progress', state);
       });
       return cache.getImageWritableStream(slug).then(function(cacheStream) {
+        var pass2;
         pass.pipe(cacheStream);
-        return pass;
+        pass2 = new stream.PassThrough();
+        pass.on('progress', function(state) {
+          return pass2.emit('progress', state);
+        });
+        pass.pipe(pass2);
+        return pass2;
       });
     });
   });

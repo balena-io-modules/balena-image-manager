@@ -1,5 +1,7 @@
 m = require('mochainon')
+_ = require('lodash')
 tmp = require('tmp')
+PassThrough = require('stream').PassThrough
 Promise = require('bluebird')
 fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
@@ -75,3 +77,19 @@ describe 'Manager:', ->
 								fs.readFileAsync(@image.name, encoding: 'utf8').then (contents) ->
 									m.chai.expect(contents).to.equal('Download image')
 									done()
+
+					it 'should be able to read from the stream after a slight delay', (done) ->
+						manager.get('raspberry-pi').then (stream) ->
+							Promise.delay(200).return(stream)
+						.then (stream) ->
+							pass = new PassThrough()
+							stream.pipe(pass)
+
+							result = ''
+
+							pass.on 'data', (chunk) ->
+								result += chunk
+
+							pass.on 'end', ->
+								m.chai.expect(result).to.equal('Download image')
+								done()
