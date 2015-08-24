@@ -48,30 +48,27 @@ image = require('./image')
 exports.get = (slug) ->
 	cache.isImageFresh(slug).then (isFresh) ->
 		return cache.getImage(slug) if isFresh
+		return image.download(slug)
+	.then (imageStream) ->
 
-		image.download(slug).then (imageStream) ->
+		# Piping to a PassThrough stream is needed to be able
+		# to then pipe the stream to multiple destinations.
+		pass = new stream.PassThrough()
+		imageStream.pipe(pass)
 
-			# Piping to a PassThrough stream is needed to be able
-			# to then pipe the stream to multiple destinations.
-			pass = new stream.PassThrough()
-			imageStream.pipe(pass)
+		# Save a copy of the image in the cache
+		cache.getImageWritableStream(slug).then (cacheStream) ->
+			pass.pipe(cacheStream)
+
+			# If we return `pass` directly, the client will not be able
+			# to read all data from it after a delay, since it will be
+			# instantly piped to `cacheStream`.
+			# The solution is to create yet another PassThrough stream,
+			# pipe to it and return the new stream instead.
+			pass2 = new stream.PassThrough()
 			imageStream.on 'progress', (state) ->
-				pass.emit('progress', state)
-
-			# Save a copy of the image in the cache
-			cache.getImageWritableStream(slug).then (cacheStream) ->
-				pass.pipe(cacheStream)
-
-				# If we return `pass` directly, the client will not be able
-				# to read all data from it after a delay, since it will be
-				# instantly piped to `cacheStream`.
-				# The solution is to create yet another PassThrough stream,
-				# pipe to it and return the new stream instead.
-				pass2 = new stream.PassThrough()
-				pass.on 'progress', (state) ->
-					pass2.emit('progress', state)
-				pass.pipe(pass2)
-				return pass2
+				pass2.emit('progress', state)
+			return pass.pipe(pass2)
 
 ###*
 # @summary Clean the saved images cache
