@@ -56,23 +56,19 @@ exports.get = function(slug) {
     if (isFresh) {
       return cache.getImage(slug);
     }
-    return image.download(slug).then(function(imageStream) {
-      var pass;
-      pass = new stream.PassThrough();
-      imageStream.pipe(pass);
+    return image.download(slug);
+  }).then(function(imageStream) {
+    var pass;
+    pass = new stream.PassThrough();
+    imageStream.pipe(pass);
+    return cache.getImageWritableStream(slug).then(function(cacheStream) {
+      var pass2;
+      pass.pipe(cacheStream);
+      pass2 = new stream.PassThrough();
       imageStream.on('progress', function(state) {
-        return pass.emit('progress', state);
+        return pass2.emit('progress', state);
       });
-      return cache.getImageWritableStream(slug).then(function(cacheStream) {
-        var pass2;
-        pass.pipe(cacheStream);
-        pass2 = new stream.PassThrough();
-        pass.on('progress', function(state) {
-          return pass2.emit('progress', state);
-        });
-        pass.pipe(pass2);
-        return pass2;
-      });
+      return pass.pipe(pass2);
     });
   });
 };
