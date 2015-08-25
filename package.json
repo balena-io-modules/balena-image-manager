@@ -44,7 +44,7 @@
     "bluebird": "^2.9.30",
     "lodash": "^3.10.0",
     "mkdirp": "^0.5.1",
-    "resin-sdk": "~2.5.0",
+    "resin-sdk": "~2.6.1",
     "rimraf": "^2.4.1"
   }
 }
