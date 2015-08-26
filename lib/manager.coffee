@@ -67,6 +67,7 @@ exports.get = (slug) ->
 			# pipe to it and return the new stream instead.
 			pass2 = new stream.PassThrough()
 			pass2.length = imageStream.length
+			pass2.mime = imageStream.mime
 			imageStream.on 'progress', (state) ->
 				pass2.emit('progress', state)
 			return pass.pipe(pass2)
