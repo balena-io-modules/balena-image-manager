@@ -110,3 +110,20 @@ describe 'Manager:', ->
 						manager.get('raspberry-pi').then (stream) ->
 							m.chai.expect(stream.length).to.equal(26)
 						.nodeify(done)
+
+				describe 'given a stream with a mime property', ->
+
+					beforeEach ->
+						@imageDownloadStub = m.sinon.stub(image, 'download')
+						message = 'Lorem ipsum dolor sit amet'
+						stream = stringToStream(message)
+						stream.mime = 'application/zip'
+						@imageDownloadStub.returns(Promise.resolve(stream))
+
+					afterEach ->
+						@imageDownloadStub.restore()
+
+					it 'should preserve the property', (done) ->
+						manager.get('raspberry-pi').then (stream) ->
+							m.chai.expect(stream.mime).to.equal('application/zip')
+						.nodeify(done)

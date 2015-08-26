@@ -66,6 +66,7 @@ exports.get = function(slug) {
       pass.pipe(cacheStream);
       pass2 = new stream.PassThrough();
       pass2.length = imageStream.length;
+      pass2.mime = imageStream.mime;
       imageStream.on('progress', function(state) {
         return pass2.emit('progress', state);
       });
