@@ -26,6 +26,7 @@ Promise = require('bluebird')
 fs = Promise.promisifyAll(require('fs'))
 mkdirp = Promise.promisify(require('mkdirp'))
 rimraf = Promise.promisify(require('rimraf'))
+mime = require('mime')
 resin = require('resin-sdk')
 path = require('path')
 utils = require('./utils')
@@ -98,6 +99,7 @@ exports.getImage = (slug) ->
 		utils.getFileSize(imagePath).then (size) ->
 			stream = fs.createReadStream(imagePath)
 			stream.length = size
+			stream.mime = mime.lookup(imagePath)
 			return stream
 
 ###*

@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-var Promise, fs, mkdirp, path, resin, rimraf, utils;
+var Promise, fs, mime, mkdirp, path, resin, rimraf, utils;
 
 Promise = require('bluebird');
 
@@ -31,6 +31,8 @@ fs = Promise.promisifyAll(require('fs'));
 mkdirp = Promise.promisify(require('mkdirp'));
 
 rimraf = Promise.promisify(require('rimraf'));
+
+mime = require('mime');
 
 resin = require('resin-sdk');
 
@@ -114,6 +116,7 @@ exports.getImage = function(slug) {
       var stream;
       stream = fs.createReadStream(imagePath);
       stream.length = size;
+      stream.mime = mime.lookup(imagePath);
       return stream;
     });
   });

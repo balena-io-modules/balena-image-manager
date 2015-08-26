@@ -165,6 +165,11 @@ describe 'Cache:', ->
 					m.chai.expect(stream.length).to.equal(26)
 					done()
 
+			it 'should contain a mime property', (done) ->
+				cache.getImage('lorem-ipsum').then (stream) ->
+					m.chai.expect(stream.mime).to.equal('application/octet-stream')
+					done()
+
 	describe '.getImageWritableStream()', ->
 
 		describe 'given an valid image path', ->
