@@ -1,8 +1,10 @@
 m = require('mochainon')
 _ = require('lodash')
+path = require('path')
 tmp = require('tmp')
 PassThrough = require('stream').PassThrough
 Promise = require('bluebird')
+rimraf = Promise.promisify(require('rimraf'))
 fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
 manager = require('../lib/manager')
@@ -127,3 +129,34 @@ describe 'Manager:', ->
 						manager.get('raspberry-pi').then (stream) ->
 							m.chai.expect(stream.mime).to.equal('application/zip')
 						.nodeify(done)
+
+	describe '.pipeTemporal()', ->
+
+		describe 'given a plain text stream', ->
+
+			beforeEach ->
+				@stream = fs.createReadStream(path.join(__dirname, 'fixtures', 'lorem.txt'))
+				@stream.mime = 'text/plain'
+
+			it 'should copy the contents to a temporary file', (done) ->
+				manager.pipeTemporal(@stream).then (temporalPath) ->
+					fs.readFileAsync(temporalPath, encoding: 'utf8').then (contents) ->
+						contents = contents.trim(/[\n\r]/, '')
+						m.chai.expect(contents).to.equal('Lorem ipsum dolor sit amet')
+						fs.unlinkAsync(temporalPath)
+				.nodeify(done)
+
+		describe 'given a zip archive containing a single file', ->
+
+			beforeEach ->
+				@stream = fs.createReadStream(path.join(__dirname, 'fixtures', 'lorem.zip'))
+				@stream.mime = 'application/zip'
+
+			it 'should extract the contents to a temporary directory', (done) ->
+				manager.pipeTemporal(@stream).then (temporalPath) ->
+					file = path.join(temporalPath, 'lorem.txt')
+					fs.readFileAsync(file, encoding: 'utf8').then (contents) ->
+						contents = contents.trim(/[\n\r]/, '')
+						m.chai.expect(contents).to.equal('Lorem ipsum dolor sit amet')
+						rimraf(temporalPath)
+				.nodeify(done)

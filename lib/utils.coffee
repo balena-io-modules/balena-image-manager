@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 Promise = require('bluebird')
 fs = Promise.promisifyAll(require('fs'))
+tmp = Promise.promisifyAll(require('tmp'))
+tmp.setGracefulCleanup()
 
 ###*
 # @summary Get file size
@@ -55,3 +57,39 @@ exports.getFileSize = (file) ->
 exports.getFileCreatedTime = (file) ->
 	fs.statAsync(file).get('ctime').then (ctime) ->
 		return ctime.getTime()
+
+###*
+# @summary Get a temporal path
+# @function
+# @protected
+#
+# @description
+# This function only returns a path, so it's the client responsibility to delete it if there was data saved there.
+#
+# @returns {Promise<String>} temporal path
+#
+# @example
+# utils.getTemporalPath().then (temporalPath) ->
+# 	console.log(temporalPath)
+###
+exports.getTemporalPath = ->
+	return tmp.tmpNameAsync()
+
+###*
+# @summary Wait for a stream to be closed
+# @function
+# @protected
+#
+# @param {Stream} stream - stream
+# @returns {Promise}
+#
+# @example
+# file = fs.createReadStream('my/file')
+# file.pipe(...)
+# utils.waitStream(file).then ->
+# 	console.log('The stream was closed')
+###
+exports.waitStream = (stream) ->
+	return new Promise (resolve, reject) ->
+		stream.on('close', resolve)
+		stream.on('error', reject)

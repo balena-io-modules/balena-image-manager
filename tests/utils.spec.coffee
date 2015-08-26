@@ -1,4 +1,7 @@
 m = require('mochainon')
+EventEmitter = require('events').EventEmitter
+Promise = require('bluebird')
+path = require('path')
 fs = require('fs')
 utils = require('../lib/utils')
 
@@ -60,3 +63,50 @@ describe 'Utils:', ->
 			it 'should be rejected with an error', ->
 				promise = utils.getFileCreatedTime('foo')
 				m.chai.expect(promise).to.be.rejectedWith('ENOENT')
+
+	describe '.getTemporalPath()', ->
+
+		it 'should return an absolute path', (done) ->
+			isAbsolute = (filePath) ->
+				path.resolve(filePath) is path.normalize(filePath)
+
+			utils.getTemporalPath().then (temporal) ->
+				m.chai.expect(isAbsolute(temporal)).to.be.true
+			.nodeify(done)
+
+		it 'should always return different paths', (done) ->
+			Promise.props
+				first: utils.getTemporalPath()
+				second: utils.getTemporalPath()
+				third: utils.getTemporalPath()
+			.then (temporals) ->
+				m.chai.expect(temporals.first).to.not.equal(temporals.second)
+				m.chai.expect(temporals.second).to.not.equal(temporals.third)
+				m.chai.expect(temporals.third).to.not.equal(temporals.first)
+			.nodeify(done)
+
+	describe '.waitStream()', ->
+
+		describe 'given a stream that emits a close event', ->
+
+			beforeEach ->
+				@stream = new EventEmitter()
+				setTimeout =>
+					@stream.emit('close')
+				, 100
+
+			it 'should resolve the promise', ->
+				promise = utils.waitStream(@stream)
+				m.chai.expect(promise).to.be.fulfilled
+
+		describe 'given a stream that emits an error event', ->
+
+			beforeEach ->
+				@stream = new EventEmitter()
+				setTimeout =>
+					@stream.emit('error', new Error('Hello World'))
+				, 100
+
+			it 'should be rejected with the error', ->
+				promise = utils.waitStream(@stream)
+				m.chai.expect(promise).to.be.rejectedWith('Hello World')

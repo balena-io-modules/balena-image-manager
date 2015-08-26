@@ -22,11 +22,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-var Promise, fs;
+var Promise, fs, tmp;
 
 Promise = require('bluebird');
 
 fs = Promise.promisifyAll(require('fs'));
+
+tmp = Promise.promisifyAll(require('tmp'));
+
+tmp.setGracefulCleanup();
 
 
 /**
@@ -63,5 +67,48 @@ exports.getFileSize = function(file) {
 exports.getFileCreatedTime = function(file) {
   return fs.statAsync(file).get('ctime').then(function(ctime) {
     return ctime.getTime();
+  });
+};
+
+
+/**
+ * @summary Get a temporal path
+ * @function
+ * @protected
+ *
+ * @description
+ * This function only returns a path, so it's the client responsibility to delete it if there was data saved there.
+ *
+ * @returns {Promise<String>} temporal path
+ *
+ * @example
+ * utils.getTemporalPath().then (temporalPath) ->
+ * 	console.log(temporalPath)
+ */
+
+exports.getTemporalPath = function() {
+  return tmp.tmpNameAsync();
+};
+
+
+/**
+ * @summary Wait for a stream to be closed
+ * @function
+ * @protected
+ *
+ * @param {Stream} stream - stream
+ * @returns {Promise}
+ *
+ * @example
+ * file = fs.createReadStream('my/file')
+ * file.pipe(...)
+ * utils.waitStream(file).then ->
+ * 	console.log('The stream was closed')
+ */
+
+exports.waitStream = function(stream) {
+  return new Promise(function(resolve, reject) {
+    stream.on('close', resolve);
+    return stream.on('error', reject);
   });
 };

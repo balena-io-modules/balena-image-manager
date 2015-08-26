@@ -31,6 +31,7 @@ Documentation
 * [manager](#module_manager)
   * [.get(slug)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
   * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
+  * [.pipeTemporal(stream)](#module_manager.pipeTemporal) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="module_manager.get"></a>
 ### manager.get(slug) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
@@ -60,6 +61,28 @@ Useful to manually force an image to be re-downloaded.
 **Example**  
 ```js
 manager.cleanCache()
+```
+<a name="module_manager.pipeTemporal"></a>
+### manager.pipeTemporal(stream) ⇒ <code>Promise.&lt;String&gt;</code>
+If the image is a zip directory, it's uncompressed to a temporal location.
+
+Make you *delete the temporal file* after you're done with it.
+
+**Kind**: static method of <code>[manager](#module_manager)</code>  
+**Summary**: Pipe image stream to a temporal location  
+**Returns**: <code>Promise.&lt;String&gt;</code> - temporal location  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| stream | <code>Stream</code> | image stream |
+
+**Example**  
+```js
+manager.get('raspberry-pi').then (stream) ->
+	manager.pipeTemporal(stream)
+.then (temporalPath) ->
+	console.log("The image was piped to #{temporalPath}")
 ```
 
 Support
