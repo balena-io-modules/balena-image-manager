@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.1] - 2015-09-04
+
+### Changed
+
+- Fix issue with image not being fetched from the cache.
+
 ## [3.2.0] - 2015-08-26
 
 ### Added
@@ -72,6 +78,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implement manager.configure().
 
+[3.2.1]: https://github.com/resin-io/resin-image-manager/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/resin-io/resin-image-manager/compare/v3.1.3...v3.2.0
 [3.1.3]: https://github.com/resin-io/resin-image-manager/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/resin-io/resin-image-manager/compare/v3.1.1...v3.1.2
