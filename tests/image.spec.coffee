@@ -103,8 +103,8 @@ describe 'Image:', ->
 				describe 'given an always valid whoami endpoint', ->
 
 					beforeEach (done) ->
-						resin.settings.get('remoteUrl').then (remoteUrl) ->
-							nock(remoteUrl).get('/whoami')
+						resin.settings.get('apiUrl').then (apiUrl) ->
+							nock(apiUrl).get('/whoami')
 								.reply(200, fixtures.johndoe.token)
 							done()
 
@@ -114,8 +114,8 @@ describe 'Image:', ->
 					describe 'given a valid download endpoint', ->
 
 						beforeEach (done) ->
-							resin.settings.get('remoteUrl').then (remoteUrl) ->
-								nock(remoteUrl).get('/download?network=ethernet&appId=1')
+							resin.settings.get('apiUrl').then (apiUrl) ->
+								nock(apiUrl).get('/download?network=ethernet&appId=1')
 									.reply(200, 'Lorem ipsum dolor sit amet')
 								done()
 
@@ -136,8 +136,8 @@ describe 'Image:', ->
 					describe 'given an invalid download endpoint', ->
 
 						beforeEach (done) ->
-							resin.settings.get('remoteUrl').then (remoteUrl) ->
-								nock(remoteUrl).get('/download?network=ethernet&appId=1')
+							resin.settings.get('apiUrl').then (apiUrl) ->
+								nock(apiUrl).get('/download?network=ethernet&appId=1')
 									.reply(400, 'Invalid application id')
 								done()
 
