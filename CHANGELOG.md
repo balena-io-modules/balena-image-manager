@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.4] - 2015-12-04
+
+### Changed
+
+- Omit tests from NPM package.
+
 ## [3.2.3] - 2015-11-24
 
 ### Changed
@@ -90,6 +96,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implement manager.configure().
 
+[3.2.4]: https://github.com/resin-io/resin-image-manager/compare/v3.2.3...v3.2.4
 [3.2.3]: https://github.com/resin-io/resin-image-manager/compare/v3.2.2...v3.2.3
 [3.2.2]: https://github.com/resin-io/resin-image-manager/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/resin-io/resin-image-manager/compare/v3.2.0...v3.2.1
