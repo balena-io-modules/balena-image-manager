@@ -1,6 +1,6 @@
 {
   "name": "resin-image-manager",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "description": "Manage device base operating systems resources with caching support",
   "main": "build/manager.js",
   "homepage": "https://github.com/resin-io/resin-image-manager",
