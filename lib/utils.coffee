@@ -74,22 +74,3 @@ exports.getFileCreatedTime = (file) ->
 ###
 exports.getTemporalPath = ->
 	return tmp.tmpNameAsync()
-
-###*
-# @summary Wait for a stream to be closed
-# @function
-# @protected
-#
-# @param {Stream} stream - stream
-# @returns {Promise}
-#
-# @example
-# file = fs.createReadStream('my/file')
-# file.pipe(...)
-# utils.waitStream(file).then ->
-# 	console.log('The stream was closed')
-###
-exports.waitStream = (stream) ->
-	return new Promise (resolve, reject) ->
-		stream.on('close', resolve)
-		stream.on('error', reject)

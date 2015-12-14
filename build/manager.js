@@ -26,13 +26,15 @@ THE SOFTWARE.
 /**
  * @module manager
  */
-var cache, fs, image, stream, unzip, utils;
+var cache, fs, image, rindle, stream, unzip, utils;
 
 stream = require('stream');
 
 fs = require('fs');
 
 unzip = require('unzip2');
+
+rindle = require('rindle');
 
 cache = require('./cache');
 
@@ -131,6 +133,6 @@ exports.pipeTemporal = function(stream) {
     } else {
       output = fs.createWriteStream(temporalPath);
     }
-    return utils.waitStream(stream.pipe(output))["return"](temporalPath);
+    return rindle.wait(stream.pipe(output))["return"](temporalPath);
   });
 };

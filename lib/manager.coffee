@@ -29,6 +29,7 @@ THE SOFTWARE.
 stream = require('stream')
 fs = require('fs')
 unzip = require('unzip2')
+rindle = require('rindle')
 cache = require('./cache')
 image = require('./image')
 utils = require('./utils')
@@ -120,4 +121,4 @@ exports.pipeTemporal = (stream) ->
 		else
 			output = fs.createWriteStream(temporalPath)
 
-		utils.waitStream(stream.pipe(output)).return(temporalPath)
+		rindle.wait(stream.pipe(output)).return(temporalPath)

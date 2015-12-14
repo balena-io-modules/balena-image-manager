@@ -84,29 +84,3 @@ describe 'Utils:', ->
 				m.chai.expect(temporals.second).to.not.equal(temporals.third)
 				m.chai.expect(temporals.third).to.not.equal(temporals.first)
 			.nodeify(done)
-
-	describe '.waitStream()', ->
-
-		describe 'given a stream that emits a close event', ->
-
-			beforeEach ->
-				@stream = new EventEmitter()
-				setTimeout =>
-					@stream.emit('close')
-				, 100
-
-			it 'should resolve the promise', ->
-				promise = utils.waitStream(@stream)
-				m.chai.expect(promise).to.be.fulfilled
-
-		describe 'given a stream that emits an error event', ->
-
-			beforeEach ->
-				@stream = new EventEmitter()
-				setTimeout =>
-					@stream.emit('error', new Error('Hello World'))
-				, 100
-
-			it 'should be rejected with the error', ->
-				promise = utils.waitStream(@stream)
-				m.chai.expect(promise).to.be.rejectedWith('Hello World')
