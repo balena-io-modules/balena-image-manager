@@ -1,5 +1,5 @@
 m = require('mochainon')
-_ = require('lodash')
+resin = require('resin-sdk')
 path = require('path')
 tmp = require('tmp')
 PassThrough = require('stream').PassThrough
@@ -9,7 +9,6 @@ fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
 manager = require('../lib/manager')
 cache = require('../lib/cache')
-image = require('../lib/image')
 
 describe 'Manager:', ->
 
@@ -60,11 +59,11 @@ describe 'Manager:', ->
 				describe 'given a valid download endpoint', ->
 
 					beforeEach ->
-						@imageDownloadStub = m.sinon.stub(image, 'download')
-						@imageDownloadStub.returns(Promise.resolve(stringToStream('Download image')))
+						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
+						@osDownloadStub.returns(Promise.resolve(stringToStream('Download image')))
 
 					afterEach ->
-						@imageDownloadStub.restore()
+						@osDownloadStub.restore()
 
 					it 'should eventually become a readable stream of the download image and save a backup copy', (done) ->
 						manager.get('raspberry-pi').then (stream) =>
@@ -96,34 +95,17 @@ describe 'Manager:', ->
 								m.chai.expect(result).to.equal('Download image')
 								done()
 
-				describe 'given a stream with a length property', ->
-
-					beforeEach ->
-						@imageDownloadStub = m.sinon.stub(image, 'download')
-						message = 'Lorem ipsum dolor sit amet'
-						stream = stringToStream(message)
-						stream.length = message.length
-						@imageDownloadStub.returns(Promise.resolve(stream))
-
-					afterEach ->
-						@imageDownloadStub.restore()
-
-					it 'should preserve the property', (done) ->
-						manager.get('raspberry-pi').then (stream) ->
-							m.chai.expect(stream.length).to.equal(26)
-						.nodeify(done)
-
 				describe 'given a stream with a mime property', ->
 
 					beforeEach ->
-						@imageDownloadStub = m.sinon.stub(image, 'download')
+						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
 						message = 'Lorem ipsum dolor sit amet'
 						stream = stringToStream(message)
 						stream.mime = 'application/zip'
-						@imageDownloadStub.returns(Promise.resolve(stream))
+						@osDownloadStub.returns(Promise.resolve(stream))
 
 					afterEach ->
-						@imageDownloadStub.restore()
+						@osDownloadStub.restore()
 
 					it 'should preserve the property', (done) ->
 						manager.get('raspberry-pi').then (stream) ->

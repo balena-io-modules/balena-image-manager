@@ -18,7 +18,7 @@ limitations under the License.
 /**
  * @module manager
  */
-var cache, fs, image, rindle, stream, unzip, utils;
+var cache, fs, resin, rindle, stream, unzip, utils;
 
 stream = require('stream');
 
@@ -26,11 +26,11 @@ fs = require('fs');
 
 unzip = require('unzip2');
 
+resin = require('resin-sdk');
+
 rindle = require('rindle');
 
 cache = require('./cache');
-
-image = require('./image');
 
 utils = require('./utils');
 
@@ -56,7 +56,7 @@ exports.get = function(slug) {
     if (isFresh) {
       return cache.getImage(slug);
     }
-    return image.download(slug).then(function(imageStream) {
+    return resin.models.os.download(slug).then(function(imageStream) {
       var pass;
       pass = new stream.PassThrough();
       imageStream.pipe(pass);
@@ -64,7 +64,6 @@ exports.get = function(slug) {
         var pass2;
         pass.pipe(cacheStream);
         pass2 = new stream.PassThrough();
-        pass2.length = imageStream.length;
         pass2.mime = imageStream.mime;
         imageStream.on('progress', function(state) {
           return pass2.emit('progress', state);

@@ -21,9 +21,9 @@ limitations under the License.
 stream = require('stream')
 fs = require('fs')
 unzip = require('unzip2')
+resin = require('resin-sdk')
 rindle = require('rindle')
 cache = require('./cache')
-image = require('./image')
 utils = require('./utils')
 
 ###*
@@ -44,7 +44,7 @@ utils = require('./utils')
 exports.get = (slug) ->
 	cache.isImageFresh(slug).then (isFresh) ->
 		return cache.getImage(slug) if isFresh
-		return image.download(slug).then (imageStream) ->
+		return resin.models.os.download(slug).then (imageStream) ->
 
 			# Piping to a PassThrough stream is needed to be able
 			# to then pipe the stream to multiple destinations.
@@ -61,7 +61,6 @@ exports.get = (slug) ->
 				# The solution is to create yet another PassThrough stream,
 				# pipe to it and return the new stream instead.
 				pass2 = new stream.PassThrough()
-				pass2.length = imageStream.length
 				pass2.mime = imageStream.mime
 				imageStream.on 'progress', (state) ->
 					pass2.emit('progress', state)

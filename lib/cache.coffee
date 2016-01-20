@@ -36,15 +36,14 @@ utils = require('./utils')
 # 	console.log(imagePath)
 ###
 exports.getImagePath = (slug) ->
-	resin.settings.get('cacheDirectory').then (cacheDirectory) ->
-		extension = 'img'
-
-		# Hardcode zip extension for intel edison for now.
-		# In the future, we will look for the device manifest
-		# of the given slug and determine if zip = true.
-		extension = 'zip' if slug is 'intel-edison'
-
-		return path.join(cacheDirectory, "#{slug}.#{extension}")
+	Promise.props
+		cacheDirectory: resin.settings.get('cacheDirectory')
+		fstype: resin.models.device.getManifestBySlug(slug)
+			.get('yocto')
+			.get('fstype')
+	.then (results) ->
+		extension = if results.fstype is 'zip' then 'zip' else 'img'
+		return path.join(results.cacheDirectory, "#{slug}.#{extension}")
 
 ###*
 # @summary Determine if a device image is fresh
@@ -88,11 +87,9 @@ exports.isImageFresh = (slug) ->
 ###
 exports.getImage = (slug) ->
 	exports.getImagePath(slug).then (imagePath) ->
-		utils.getFileSize(imagePath).then (size) ->
-			stream = fs.createReadStream(imagePath)
-			stream.length = size
-			stream.mime = mime.lookup(imagePath)
-			return stream
+		stream = fs.createReadStream(imagePath)
+		stream.mime = mime.lookup(imagePath)
+		return stream
 
 ###*
 # @summary Get a writable stream for an image in the cache
