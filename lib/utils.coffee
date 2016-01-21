@@ -16,8 +16,6 @@ limitations under the License.
 
 Promise = require('bluebird')
 fs = Promise.promisifyAll(require('fs'))
-tmp = Promise.promisifyAll(require('tmp'))
-tmp.setGracefulCleanup()
 
 ###*
 # @summary Get file created time
@@ -34,20 +32,3 @@ tmp.setGracefulCleanup()
 exports.getFileCreatedTime = (file) ->
 	fs.statAsync(file).get('ctime').then (ctime) ->
 		return ctime.getTime()
-
-###*
-# @summary Get a temporal path
-# @function
-# @protected
-#
-# @description
-# This function only returns a path, so it's the client responsibility to delete it if there was data saved there.
-#
-# @returns {Promise<String>} temporal path
-#
-# @example
-# utils.getTemporalPath().then (temporalPath) ->
-# 	console.log(temporalPath)
-###
-exports.getTemporalPath = ->
-	return tmp.tmpNameAsync()

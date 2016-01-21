@@ -37,7 +37,8 @@
     "mochainon": "^1.0.0",
     "mock-fs": "^3.0.0",
     "nock": "^2.6.0",
-    "string-to-stream": "^1.0.1"
+    "string-to-stream": "^1.0.1",
+    "tmp": "0.0.28"
   },
   "dependencies": {
     "bluebird": "^2.9.30",
@@ -45,9 +46,6 @@
     "mime": "^1.3.4",
     "mkdirp": "^0.5.1",
     "resin-sdk": "v5.0.1",
-    "rimraf": "^2.4.1",
-    "rindle": "^1.2.0",
-    "tmp": "0.0.28",
-    "unzip2": "^0.2.5"
+    "rimraf": "^2.4.1"
   }
 }

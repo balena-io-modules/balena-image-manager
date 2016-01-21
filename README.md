@@ -31,9 +31,9 @@ Documentation
 
 
 * [manager](#module_manager)
-  * [.get(slug)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
-  * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
-  * [.pipeTemporal(stream)](#module_manager.pipeTemporal) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.get(slug)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
+    * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
+    * [.pipeTemporal(stream)](#module_manager.pipeTemporal) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="module_manager.get"></a>
 ### manager.get(slug) ⇒ <code>Promise.&lt;ReadStream&gt;</code>

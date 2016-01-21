@@ -18,17 +18,13 @@ limitations under the License.
 /**
  * @module manager
  */
-var cache, fs, resin, rindle, stream, unzip, utils;
+var cache, fs, resin, stream, utils;
 
 stream = require('stream');
 
 fs = require('fs');
 
-unzip = require('unzip2');
-
 resin = require('resin-sdk');
-
-rindle = require('rindle');
 
 cache = require('./cache');
 
@@ -91,39 +87,4 @@ exports.get = function(slug) {
 
 exports.cleanCache = function() {
   return cache.clean();
-};
-
-
-/**
- * @summary Pipe image stream to a temporal location
- * @function
- * @public
- *
- * @description
- * If the image is a zip directory, it's uncompressed to a temporal location.
- *
- * Make you *delete the temporal file* after you're done with it.
- *
- * @param {Stream} stream - image stream
- * @returns {Promise<String>} temporal location
- *
- * @example
- * manager.get('raspberry-pi').then (stream) ->
- * 	manager.pipeTemporal(stream)
- * .then (temporalPath) ->
- * 	console.log("The image was piped to #{temporalPath}")
- */
-
-exports.pipeTemporal = function(stream) {
-  return utils.getTemporalPath().then(function(temporalPath) {
-    var output;
-    if (stream.mime === 'application/zip') {
-      output = unzip.Extract({
-        path: temporalPath
-      });
-    } else {
-      output = fs.createWriteStream(temporalPath);
-    }
-    return rindle.wait(stream.pipe(output))["return"](temporalPath);
-  });
 };
