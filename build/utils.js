@@ -26,24 +26,6 @@ tmp.setGracefulCleanup();
 
 
 /**
- * @summary Get file size
- * @function
- * @protected
- *
- * @param {String} file - file path
- * @returns {Promise<Number>} file size in bytes
- *
- * @example
- * utils.getFileSize('foo/bar').then (size) ->
- * 	console.log("Size: #{size}")
- */
-
-exports.getFileSize = function(file) {
-  return fs.statAsync(file).get('size');
-};
-
-
-/**
  * @summary Get file created time
  * @function
  * @protected

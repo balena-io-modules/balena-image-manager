@@ -47,13 +47,13 @@ utils = require('./utils');
  */
 
 exports.getImagePath = function(slug) {
-  return resin.settings.get('cacheDirectory').then(function(cacheDirectory) {
+  return Promise.props({
+    cacheDirectory: resin.settings.get('cacheDirectory'),
+    fstype: resin.models.device.getManifestBySlug(slug).get('yocto').get('fstype')
+  }).then(function(results) {
     var extension;
-    extension = 'img';
-    if (slug === 'intel-edison') {
-      extension = 'zip';
-    }
-    return path.join(cacheDirectory, slug + "." + extension);
+    extension = results.fstype === 'zip' ? 'zip' : 'img';
+    return path.join(results.cacheDirectory, slug + "." + extension);
   });
 };
 
@@ -104,13 +104,10 @@ exports.isImageFresh = function(slug) {
 
 exports.getImage = function(slug) {
   return exports.getImagePath(slug).then(function(imagePath) {
-    return utils.getFileSize(imagePath).then(function(size) {
-      var stream;
-      stream = fs.createReadStream(imagePath);
-      stream.length = size;
-      stream.mime = mime.lookup(imagePath);
-      return stream;
-    });
+    var stream;
+    stream = fs.createReadStream(imagePath);
+    stream.mime = mime.lookup(imagePath);
+    return stream;
   });
 };
 
