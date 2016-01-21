@@ -1,7 +1,4 @@
 m = require('mochainon')
-EventEmitter = require('events').EventEmitter
-Promise = require('bluebird')
-path = require('path')
 fs = require('fs')
 utils = require('../lib/utils')
 
@@ -35,24 +32,3 @@ describe 'Utils:', ->
 			it 'should be rejected with an error', ->
 				promise = utils.getFileCreatedTime('foo')
 				m.chai.expect(promise).to.be.rejectedWith('ENOENT')
-
-	describe '.getTemporalPath()', ->
-
-		it 'should return an absolute path', (done) ->
-			isAbsolute = (filePath) ->
-				path.resolve(filePath) is path.normalize(filePath)
-
-			utils.getTemporalPath().then (temporal) ->
-				m.chai.expect(isAbsolute(temporal)).to.be.true
-			.nodeify(done)
-
-		it 'should always return different paths', (done) ->
-			Promise.props
-				first: utils.getTemporalPath()
-				second: utils.getTemporalPath()
-				third: utils.getTemporalPath()
-			.then (temporals) ->
-				m.chai.expect(temporals.first).to.not.equal(temporals.second)
-				m.chai.expect(temporals.second).to.not.equal(temporals.third)
-				m.chai.expect(temporals.third).to.not.equal(temporals.first)
-			.nodeify(done)
