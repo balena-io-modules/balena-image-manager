@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.6] - 2016-01-21
+
+### Changed
+
+- Upgrade `resin-sdk` to v5.0.1.
+- Change license to Apache 2.0.
+
 ## [3.2.5] - 2015-12-06
 
 ### Allow automatic minor patches upgrades of the Resin SDK.
@@ -100,6 +107,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implement manager.configure().
 
+[3.2.6]: https://github.com/resin-io/resin-image-manager/compare/v3.2.5...v3.2.6
 [3.2.5]: https://github.com/resin-io/resin-image-manager/compare/v3.2.4...v3.2.5
 [3.2.4]: https://github.com/resin-io/resin-image-manager/compare/v3.2.3...v3.2.4
 [3.2.3]: https://github.com/resin-io/resin-image-manager/compare/v3.2.2...v3.2.3
