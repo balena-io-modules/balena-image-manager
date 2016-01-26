@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2016-01-26
+
+### Changed
+
+- Use `Last-Modified` header to manage cache expiration.
+
+### Removed
+
+- Remove `.pipeTemporal()`.
+
 ## [3.2.6] - 2016-01-21
 
 ### Changed
@@ -107,6 +117,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implement manager.configure().
 
+[4.0.0]: https://github.com/resin-io/resin-image-manager/compare/v3.2.6...v4.0.0
 [3.2.6]: https://github.com/resin-io/resin-image-manager/compare/v3.2.5...v3.2.6
 [3.2.5]: https://github.com/resin-io/resin-image-manager/compare/v3.2.4...v3.2.5
 [3.2.4]: https://github.com/resin-io/resin-image-manager/compare/v3.2.3...v3.2.4
