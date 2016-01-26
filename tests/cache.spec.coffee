@@ -83,65 +83,59 @@ describe 'Cache:', ->
 			describe 'given the file does not exist', ->
 
 				beforeEach ->
-					@utilsGetFileCreatedTime = m.sinon.stub(utils, 'getFileCreatedTime')
-					@utilsGetFileCreatedTime.returns(Promise.reject(new Error('ENOENT, stat \'raspberry-pi\'')))
+					@utilsGetFileCreatedDate = m.sinon.stub(utils, 'getFileCreatedDate')
+					@utilsGetFileCreatedDate.returns(Promise.reject(new Error('ENOENT, stat \'raspberry-pi\'')))
 
 				afterEach ->
-					@utilsGetFileCreatedTime.restore()
+					@utilsGetFileCreatedDate.restore()
 
 				it 'should return false', ->
 					promise = cache.isImageFresh('raspberry-pi')
 					m.chai.expect(promise).to.eventually.be.false
 
-			describe 'given a fixed current time', ->
+			describe 'given a fixed created time', ->
 
 				beforeEach ->
-					@dateNowStub = m.sinon.stub(Date, 'now')
-					@dateNowStub.returns(1000000000000)
+					@utilsGetFileCreatedDate = m.sinon.stub(utils, 'getFileCreatedDate')
+					@utilsGetFileCreatedDate.returns(Promise.resolve(new Date('2014-01-01T00:00:00.000Z')))
 
 				afterEach ->
-					@dateNowStub.restore()
+					@utilsGetFileCreatedDate.restore()
 
-				describe 'given the file was created before the cache time', ->
+				describe 'given the file was created before the os last modified time', ->
 
-					beforeEach (done) ->
-						@utilsGetFileCreatedTime = m.sinon.stub(utils, 'getFileCreatedTime')
-						resin.settings.get('imageCacheTime').then (imageCacheTime) =>
-							@utilsGetFileCreatedTime.returns(Promise.resolve(Date.now() - imageCacheTime + 1))
-							done()
+					beforeEach ->
+						@osGetLastModified = m.sinon.stub(resin.models.os, 'getLastModified')
+						@osGetLastModified.returns(Promise.resolve(new Date('2014-02-01T00:00:00.000Z')))
 
 					afterEach ->
-						@utilsGetFileCreatedTime.restore()
-
-					it 'should return true', ->
-						promise = cache.isImageFresh('raspberry-pi')
-						m.chai.expect(promise).to.eventually.be.true
-
-				describe 'given the file was created after the cache time', ->
-
-					beforeEach (done) ->
-						@utilsGetFileCreatedTime = m.sinon.stub(utils, 'getFileCreatedTime')
-						resin.settings.get('imageCacheTime').then (imageCacheTime) =>
-							@utilsGetFileCreatedTime.returns(Promise.resolve(Date.now() - imageCacheTime - 1))
-							done()
-
-					afterEach ->
-						@utilsGetFileCreatedTime.restore()
+						@osGetLastModified.restore()
 
 					it 'should return false', ->
 						promise = cache.isImageFresh('raspberry-pi')
 						m.chai.expect(promise).to.eventually.be.false
 
-				describe 'given the file was created just at the cache time', ->
+				describe 'given the file was created after the os last modified time', ->
 
-					beforeEach (done) ->
-						@utilsGetFileCreatedTime = m.sinon.stub(utils, 'getFileCreatedTime')
-						resin.settings.get('imageCacheTime').then (imageCacheTime) =>
-							@utilsGetFileCreatedTime.returns(Promise.resolve(Date.now() - imageCacheTime))
-							done()
+					beforeEach ->
+						@osGetLastModified = m.sinon.stub(resin.models.os, 'getLastModified')
+						@osGetLastModified.returns(Promise.resolve(new Date('2013-01-01T00:00:00.000Z')))
 
 					afterEach ->
-						@utilsGetFileCreatedTime.restore()
+						@osGetLastModified.restore()
+
+					it 'should return true', ->
+						promise = cache.isImageFresh('raspberry-pi')
+						m.chai.expect(promise).to.eventually.be.true
+
+				describe 'given the file was created just at the os last modified time', ->
+
+					beforeEach ->
+						@osGetLastModified = m.sinon.stub(resin.models.os, 'getLastModified')
+						@osGetLastModified.returns(Promise.resolve(new Date('2014-00-01T00:00:00.000Z')))
+
+					afterEach ->
+						@osGetLastModified.restore()
 
 					it 'should return false', ->
 						promise = cache.isImageFresh('raspberry-pi')
