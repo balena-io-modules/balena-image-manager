@@ -77,13 +77,13 @@ exports.getImagePath = function(slug) {
 
 exports.isImageFresh = function(slug) {
   return exports.getImagePath(slug).then(function(imagePath) {
-    return utils.getFileCreatedTime(imagePath)["catch"](function() {});
+    return utils.getFileCreatedDate(imagePath)["catch"](function() {});
   }).then(function(createdTime) {
     if (createdTime == null) {
       return false;
     }
     return resin.settings.get('imageCacheTime').then(function(imageCacheTime) {
-      return Date.now() - createdTime < imageCacheTime;
+      return Date.now() - createdTime.getTime() < imageCacheTime;
     });
   });
 };

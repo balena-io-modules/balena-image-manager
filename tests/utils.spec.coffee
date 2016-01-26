@@ -4,7 +4,7 @@ utils = require('../lib/utils')
 
 describe 'Utils:', ->
 
-	describe '.getFileCreatedTime()', ->
+	describe '.getFileCreatedDate()', ->
 
 		describe 'given the file exists', ->
 
@@ -17,8 +17,8 @@ describe 'Utils:', ->
 				@fsStatStub.restore()
 
 			it 'should eventually equal the created time in milliseconds', ->
-				promise = utils.getFileCreatedTime('foo')
-				m.chai.expect(promise).to.eventually.equal(@date.getTime())
+				promise = utils.getFileCreatedDate('foo')
+				m.chai.expect(promise).to.eventually.equal(@date)
 
 		describe 'given the file does not exist', ->
 
@@ -30,5 +30,5 @@ describe 'Utils:', ->
 				@fsStatStub.restore()
 
 			it 'should be rejected with an error', ->
-				promise = utils.getFileCreatedTime('foo')
+				promise = utils.getFileCreatedDate('foo')
 				m.chai.expect(promise).to.be.rejectedWith('ENOENT')

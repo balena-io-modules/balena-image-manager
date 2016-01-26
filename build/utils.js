@@ -22,20 +22,18 @@ fs = Promise.promisifyAll(require('fs'));
 
 
 /**
- * @summary Get file created time
+ * @summary Get file created date
  * @function
  * @protected
  *
  * @param {String} file - file path
- * @returns {Promise<Number>} milliseconds since creation
+ * @returns {Promise<Date>} date since creation
  *
  * @example
- * utils.getFileCreatedTime('foo/bar').then (createdTime) ->
- * 	console.log("The file was created #{createdTime} milliseconds ago")
+ * utils.getFileCreatedDate('foo/bar').then (createdTime) ->
+ * 	console.log("The file was created in #{createdTime}")
  */
 
-exports.getFileCreatedTime = function(file) {
-  return fs.statAsync(file).get('ctime').then(function(ctime) {
-    return ctime.getTime();
-  });
+exports.getFileCreatedDate = function(file) {
+  return fs.statAsync(file).get('ctime');
 };

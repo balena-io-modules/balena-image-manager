@@ -66,12 +66,12 @@ exports.isImageFresh = (slug) ->
 
 		# Swallow errors from utils.getFileCreatedTime.
 		# We interpret these as if the file didn't exist
-		utils.getFileCreatedTime(imagePath).catch -> return
+		utils.getFileCreatedDate(imagePath).catch -> return
 	.then (createdTime) ->
 		return false if not createdTime?
 
 		resin.settings.get('imageCacheTime').then (imageCacheTime) ->
-			return Date.now() - createdTime < imageCacheTime
+			return Date.now() - createdTime.getTime() < imageCacheTime
 
 ###*
 # @summary Get an image from the cache
