@@ -84,7 +84,7 @@ describe 'Cache:', ->
 
 				beforeEach ->
 					@utilsGetFileCreatedDate = m.sinon.stub(utils, 'getFileCreatedDate')
-					@utilsGetFileCreatedDate.returns(Promise.reject(new Error('ENOENT, stat \'raspberry-pi\'')))
+					@utilsGetFileCreatedDate.returns(Promise.reject(new Error('ENOENT, stat \'raspberry-pi\'')).catch -> return)
 
 				afterEach ->
 					@utilsGetFileCreatedDate.restore()
