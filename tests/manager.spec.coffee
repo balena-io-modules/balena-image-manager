@@ -1,5 +1,5 @@
 m = require('mochainon')
-resin = require('resin-sdk')
+resin = require('resin-sdk-preconfigured')
 path = require('path')
 tmp = require('tmp')
 PassThrough = require('stream').PassThrough

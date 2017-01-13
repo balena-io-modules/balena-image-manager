@@ -19,7 +19,7 @@ fs = Promise.promisifyAll(require('fs'))
 mkdirp = Promise.promisify(require('mkdirp'))
 rimraf = Promise.promisify(require('rimraf'))
 mime = require('mime')
-resin = require('resin-sdk')
+resin = require('resin-sdk-preconfigured')
 path = require('path')
 utils = require('./utils')
 
