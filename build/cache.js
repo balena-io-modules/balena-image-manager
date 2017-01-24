@@ -26,7 +26,7 @@ rimraf = Promise.promisify(require('rimraf'));
 
 mime = require('mime');
 
-resin = require('resin-sdk');
+resin = require('resin-sdk-preconfigured');
 
 path = require('path');
 
