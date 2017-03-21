@@ -23,27 +23,32 @@ resin = require('resin-sdk-preconfigured')
 path = require('path')
 utils = require('./utils')
 
+getDeviceType = (deviceType) ->
+	resin.models.device.getManifestBySlug(deviceType)
+
+normalizeVersion = (deviceType, version) ->
+
 ###*
 # @summary Get path to image in cache
 # @function
 # @protected
 #
-# @param {String} slug - device type slug
+# @param {String} deviceType - device type slug or alias
 # @returns {Promise<String>} image path
 #
 # @example
 # cache.getImagePath('raspberry-pi').then (imagePath) ->
 # 	console.log(imagePath)
 ###
-exports.getImagePath = (slug) ->
+exports.getImagePath = (deviceType) ->
 	Promise.props
 		cacheDirectory: resin.settings.get('cacheDirectory')
-		fstype: resin.models.device.getManifestBySlug(slug)
+		fstype: getDeviceType(deviceType)
 			.get('yocto')
 			.get('fstype')
 	.then (results) ->
 		extension = if results.fstype is 'zip' then 'zip' else 'img'
-		return path.join(results.cacheDirectory, "#{slug}.#{extension}")
+		return path.join(results.cacheDirectory, "#{deviceType}.#{extension}")
 
 ###*
 # @summary Determine if a device image is fresh
@@ -53,7 +58,7 @@ exports.getImagePath = (slug) ->
 # @description
 # If the device image does not exist, return false.
 #
-# @param {String} slug - device slug
+# @param {String} deviceType - device type slug or alias
 # @returns {Promise<Boolean>} is image fresh
 #
 # @example
@@ -61,8 +66,8 @@ exports.getImagePath = (slug) ->
 # 	if isFresh
 # 		console.log('The Raspberry Pi image is fresh!')
 ###
-exports.isImageFresh = (slug) ->
-	exports.getImagePath(slug).then (imagePath) ->
+exports.isImageFresh = (deviceType) ->
+	exports.getImagePath(deviceType).then (imagePath) ->
 
 		# Swallow errors from utils.getFileCreatedTime.
 		# We interpret these as if the file didn't exist
@@ -71,23 +76,24 @@ exports.isImageFresh = (slug) ->
 	.then (createdDate) ->
 		return false if not createdDate?
 
-		return resin.models.os.getLastModified(slug).then (lastModifiedDate) ->
-			return lastModifiedDate < createdDate
+		return resin.models.os.getLastModified(deviceType)
+			.then (lastModifiedDate) ->
+				return lastModifiedDate < createdDate
 
 ###*
 # @summary Get an image from the cache
 # @function
 # @protected
 #
-# @param {String} slug - device slug
+# @param {String} deviceType - device type slug or alias
 # @returns {Promise<ReadStream>} image readable stream
 #
 # @example
 # utils.getImage('raspberry-pi').then (stream) ->
 # 	stream.pipe(fs.createWriteStream('foo/bar.img'))
 ###
-exports.getImage = (slug) ->
-	exports.getImagePath(slug).then (imagePath) ->
+exports.getImage = (deviceType) ->
+	exports.getImagePath(deviceType).then (imagePath) ->
 		stream = fs.createReadStream(imagePath)
 		stream.mime = mime.lookup(imagePath)
 		return stream
@@ -97,15 +103,15 @@ exports.getImage = (slug) ->
 # @function
 # @protected
 #
-# @param {String} slug - device slug
+# @param {String} deviceType - device type slug or alias
 # @returns {Promise<WriteStream>} image writable stream
 #
 # @example
 # utils.getImageWritableStream('raspberry-pi').then (stream) ->
 # 	fs.createReadStream('foo/bar').pipe(stream)
 ###
-exports.getImageWritableStream = (slug) ->
-	exports.getImagePath(slug).then (imagePath) ->
+exports.getImageWritableStream = (deviceType) ->
+	exports.getImagePath(deviceType).then (imagePath) ->
 
 		# Ensure the cache directory exists, to prevent
 		# ENOENT errors when trying to write to it.

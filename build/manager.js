@@ -39,7 +39,7 @@ utils = require('./utils');
  * @description
  * This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
  *
- * @param {String} slug - device type slug
+ * @param {String} deviceType - device type slug or alias
  * @returns {Promise<ReadStream>} image readable stream
  *
  * @example
@@ -47,16 +47,16 @@ utils = require('./utils');
  * 	stream.pipe(fs.createWriteStream('foo/bar.img'))
  */
 
-exports.get = function(slug) {
-  return cache.isImageFresh(slug).then(function(isFresh) {
+exports.get = function(deviceType) {
+  return cache.isImageFresh(deviceType).then(function(isFresh) {
     if (isFresh) {
-      return cache.getImage(slug);
+      return cache.getImage(deviceType);
     }
-    return resin.models.os.download(slug).then(function(imageStream) {
+    return resin.models.os.download(deviceType).then(function(imageStream) {
       var pass;
       pass = new stream.PassThrough();
       imageStream.pipe(pass);
-      return cache.getImageWritableStream(slug).then(function(cacheStream) {
+      return cache.getImageWritableStream(deviceType).then(function(cacheStream) {
         var pass2;
         pass.pipe(cacheStream);
         pass2 = new stream.PassThrough();

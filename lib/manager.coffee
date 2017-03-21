@@ -32,17 +32,17 @@ utils = require('./utils')
 # @description
 # This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
 #
-# @param {String} slug - device type slug
+# @param {String} deviceType - device type slug or alias
 # @returns {Promise<ReadStream>} image readable stream
 #
 # @example
 # manager.get('raspberry-pi').then (stream) ->
 # 	stream.pipe(fs.createWriteStream('foo/bar.img'))
 ###
-exports.get = (slug) ->
-	cache.isImageFresh(slug).then (isFresh) ->
-		return cache.getImage(slug) if isFresh
-		return resin.models.os.download(slug).then (imageStream) ->
+exports.get = (deviceType) ->
+	cache.isImageFresh(deviceType).then (isFresh) ->
+		return cache.getImage(deviceType) if isFresh
+		return resin.models.os.download(deviceType).then (imageStream) ->
 
 			# Piping to a PassThrough stream is needed to be able
 			# to then pipe the stream to multiple destinations.
@@ -50,7 +50,7 @@ exports.get = (slug) ->
 			imageStream.pipe(pass)
 
 			# Save a copy of the image in the cache
-			cache.getImageWritableStream(slug).then (cacheStream) ->
+			cache.getImageWritableStream(deviceType).then (cacheStream) ->
 				pass.pipe(cacheStream)
 
 				# If we return `pass` directly, the client will not be able

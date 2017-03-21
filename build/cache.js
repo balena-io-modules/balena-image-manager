@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-var Promise, fs, mime, mkdirp, path, resin, rimraf, utils;
+var Promise, fs, getDeviceType, mime, mkdirp, normalizeVersion, path, resin, rimraf, utils;
 
 Promise = require('bluebird');
 
@@ -32,13 +32,19 @@ path = require('path');
 
 utils = require('./utils');
 
+getDeviceType = function(deviceType) {
+  return resin.models.device.getManifestBySlug(deviceType);
+};
+
+normalizeVersion = function(deviceType, version) {};
+
 
 /**
  * @summary Get path to image in cache
  * @function
  * @protected
  *
- * @param {String} slug - device type slug
+ * @param {String} deviceType - device type slug or alias
  * @returns {Promise<String>} image path
  *
  * @example
@@ -46,14 +52,14 @@ utils = require('./utils');
  * 	console.log(imagePath)
  */
 
-exports.getImagePath = function(slug) {
+exports.getImagePath = function(deviceType) {
   return Promise.props({
     cacheDirectory: resin.settings.get('cacheDirectory'),
-    fstype: resin.models.device.getManifestBySlug(slug).get('yocto').get('fstype')
+    fstype: getDeviceType(deviceType).get('yocto').get('fstype')
   }).then(function(results) {
     var extension;
     extension = results.fstype === 'zip' ? 'zip' : 'img';
-    return path.join(results.cacheDirectory, slug + "." + extension);
+    return path.join(results.cacheDirectory, deviceType + "." + extension);
   });
 };
 
@@ -66,7 +72,7 @@ exports.getImagePath = function(slug) {
  * @description
  * If the device image does not exist, return false.
  *
- * @param {String} slug - device slug
+ * @param {String} deviceType - device type slug or alias
  * @returns {Promise<Boolean>} is image fresh
  *
  * @example
@@ -75,14 +81,14 @@ exports.getImagePath = function(slug) {
  * 		console.log('The Raspberry Pi image is fresh!')
  */
 
-exports.isImageFresh = function(slug) {
-  return exports.getImagePath(slug).then(function(imagePath) {
+exports.isImageFresh = function(deviceType) {
+  return exports.getImagePath(deviceType).then(function(imagePath) {
     return utils.getFileCreatedDate(imagePath)["catch"](function() {});
   }).then(function(createdDate) {
     if (createdDate == null) {
       return false;
     }
-    return resin.models.os.getLastModified(slug).then(function(lastModifiedDate) {
+    return resin.models.os.getLastModified(deviceType).then(function(lastModifiedDate) {
       return lastModifiedDate < createdDate;
     });
   });
@@ -94,7 +100,7 @@ exports.isImageFresh = function(slug) {
  * @function
  * @protected
  *
- * @param {String} slug - device slug
+ * @param {String} deviceType - device type slug or alias
  * @returns {Promise<ReadStream>} image readable stream
  *
  * @example
@@ -102,8 +108,8 @@ exports.isImageFresh = function(slug) {
  * 	stream.pipe(fs.createWriteStream('foo/bar.img'))
  */
 
-exports.getImage = function(slug) {
-  return exports.getImagePath(slug).then(function(imagePath) {
+exports.getImage = function(deviceType) {
+  return exports.getImagePath(deviceType).then(function(imagePath) {
     var stream;
     stream = fs.createReadStream(imagePath);
     stream.mime = mime.lookup(imagePath);
@@ -117,7 +123,7 @@ exports.getImage = function(slug) {
  * @function
  * @protected
  *
- * @param {String} slug - device slug
+ * @param {String} deviceType - device type slug or alias
  * @returns {Promise<WriteStream>} image writable stream
  *
  * @example
@@ -125,8 +131,8 @@ exports.getImage = function(slug) {
  * 	fs.createReadStream('foo/bar').pipe(stream)
  */
 
-exports.getImageWritableStream = function(slug) {
-  return exports.getImagePath(slug).then(function(imagePath) {
+exports.getImageWritableStream = function(deviceType) {
+  return exports.getImagePath(deviceType).then(function(imagePath) {
     return mkdirp(path.dirname(imagePath)).then(function() {
       return fs.createWriteStream(imagePath);
     });
