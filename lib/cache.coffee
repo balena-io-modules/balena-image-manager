@@ -23,32 +23,32 @@ resin = require('resin-sdk-preconfigured')
 path = require('path')
 utils = require('./utils')
 
-getDeviceType = (deviceType) ->
-	resin.models.device.getManifestBySlug(deviceType)
-
-normalizeVersion = (deviceType, version) ->
-
 ###*
 # @summary Get path to image in cache
 # @function
 # @protected
 #
 # @param {String} deviceType - device type slug or alias
+# @param {String} version - the exact resin OS version number
 # @returns {Promise<String>} image path
 #
 # @example
-# cache.getImagePath('raspberry-pi').then (imagePath) ->
+# cache.getImagePath('raspberry-pi', '1.2.3').then (imagePath) ->
 # 	console.log(imagePath)
 ###
-exports.getImagePath = (deviceType) ->
-	Promise.props
-		cacheDirectory: resin.settings.get('cacheDirectory')
-		fstype: getDeviceType(deviceType)
-			.get('yocto')
-			.get('fstype')
+exports.getImagePath = (deviceType, version) ->
+	Promise.try ->
+		utils.validateVersion(version)
+	.then ->
+		Promise.props
+			cacheDirectory: resin.settings.get('cacheDirectory')
+			fstype: utils.getDeviceType(deviceType)
+				.get('yocto')
+				.get('fstype')
 	.then (results) ->
 		extension = if results.fstype is 'zip' then 'zip' else 'img'
-		return path.join(results.cacheDirectory, "#{deviceType}.#{extension}")
+		return path.join(results.cacheDirectory,
+			"#{deviceType}-v#{version}.#{extension}")
 
 ###*
 # @summary Determine if a device image is fresh
@@ -59,24 +59,25 @@ exports.getImagePath = (deviceType) ->
 # If the device image does not exist, return false.
 #
 # @param {String} deviceType - device type slug or alias
+# @param {String} version - the exact resin OS version number
 # @returns {Promise<Boolean>} is image fresh
 #
 # @example
-# utils.isImageFresh('raspberry-pi').then (isFresh) ->
+# utils.isImageFresh('raspberry-pi', '1.2.3').then (isFresh) ->
 # 	if isFresh
-# 		console.log('The Raspberry Pi image is fresh!')
+# 		console.log('The Raspberry Pi image v1.2.3 is fresh!')
 ###
-exports.isImageFresh = (deviceType) ->
-	exports.getImagePath(deviceType).then (imagePath) ->
-
+exports.isImageFresh = (deviceType, version) ->
+	exports.getImagePath(deviceType, version)
+	.then (imagePath) ->
 		# Swallow errors from utils.getFileCreatedTime.
 		# We interpret these as if the file didn't exist
-		utils.getFileCreatedDate(imagePath).catch -> return
-
+		utils.getFileCreatedDate(imagePath)
+		.catch -> return
 	.then (createdDate) ->
 		return false if not createdDate?
 
-		return resin.models.os.getLastModified(deviceType)
+		return resin.models.os.getLastModified(deviceType, version)
 			.then (lastModifiedDate) ->
 				return lastModifiedDate < createdDate
 
@@ -86,17 +87,19 @@ exports.isImageFresh = (deviceType) ->
 # @protected
 #
 # @param {String} deviceType - device type slug or alias
+# @param {String} version - the exact resin OS version number
 # @returns {Promise<ReadStream>} image readable stream
 #
 # @example
-# utils.getImage('raspberry-pi').then (stream) ->
+# utils.getImage('raspberry-pi', '1.2.3').then (stream) ->
 # 	stream.pipe(fs.createWriteStream('foo/bar.img'))
 ###
-exports.getImage = (deviceType) ->
-	exports.getImagePath(deviceType).then (imagePath) ->
-		stream = fs.createReadStream(imagePath)
-		stream.mime = mime.lookup(imagePath)
-		return stream
+exports.getImage = (deviceType, version) ->
+	exports.getImagePath(deviceType, version)
+		.then (imagePath) ->
+			stream = fs.createReadStream(imagePath)
+			stream.mime = mime.lookup(imagePath)
+			return stream
 
 ###*
 # @summary Get a writable stream for an image in the cache
@@ -104,20 +107,20 @@ exports.getImage = (deviceType) ->
 # @protected
 #
 # @param {String} deviceType - device type slug or alias
+# @param {String} version - the exact resin OS version number
 # @returns {Promise<WriteStream>} image writable stream
 #
 # @example
-# utils.getImageWritableStream('raspberry-pi').then (stream) ->
+# utils.getImageWritableStream('raspberry-pi', '1.2.3').then (stream) ->
 # 	fs.createReadStream('foo/bar').pipe(stream)
 ###
-exports.getImageWritableStream = (deviceType) ->
-	exports.getImagePath(deviceType).then (imagePath) ->
-
-		# Ensure the cache directory exists, to prevent
-		# ENOENT errors when trying to write to it.
-		mkdirp(path.dirname(imagePath)).then ->
-
-			return fs.createWriteStream(imagePath)
+exports.getImageWritableStream = (deviceType, version) ->
+	exports.getImagePath(deviceType, version)
+		.then (imagePath) ->
+			# Ensure the cache directory exists, to prevent
+			# ENOENT errors when trying to write to it.
+			mkdirp(path.dirname(imagePath)).then ->
+				return fs.createWriteStream(imagePath)
 
 ###*
 # @summary Clean the cache

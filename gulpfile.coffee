@@ -21,7 +21,8 @@ gulp.task 'coffee', ->
 gulp.task 'test', ->
 	gulp.src(OPTIONS.files.tests, read: false)
 		.pipe(mocha({
-			reporter: 'min'
+			reporter: 'spec',
+			compilers: 'coffee:coffee-script/register'
 		}))
 
 gulp.task 'lint', ->
@@ -33,7 +34,6 @@ gulp.task 'lint', ->
 
 gulp.task 'build', [
 	'lint'
-	'test'
 	'coffee'
 ]
 

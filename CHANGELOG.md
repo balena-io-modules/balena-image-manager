@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Slightly improved docs
+- Added support for OS versions (defaults to `latest` which is backward-compatible)
 
 ## [4.0.2] - 2017-01-25
 

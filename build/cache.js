@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-var Promise, fs, getDeviceType, mime, mkdirp, normalizeVersion, path, resin, rimraf, utils;
+var Promise, fs, mime, mkdirp, path, resin, rimraf, utils;
 
 Promise = require('bluebird');
 
@@ -32,12 +32,6 @@ path = require('path');
 
 utils = require('./utils');
 
-getDeviceType = function(deviceType) {
-  return resin.models.device.getManifestBySlug(deviceType);
-};
-
-normalizeVersion = function(deviceType, version) {};
-
 
 /**
  * @summary Get path to image in cache
@@ -45,21 +39,26 @@ normalizeVersion = function(deviceType, version) {};
  * @protected
  *
  * @param {String} deviceType - device type slug or alias
+ * @param {String} version - the exact resin OS version number
  * @returns {Promise<String>} image path
  *
  * @example
- * cache.getImagePath('raspberry-pi').then (imagePath) ->
+ * cache.getImagePath('raspberry-pi', '1.2.3').then (imagePath) ->
  * 	console.log(imagePath)
  */
 
-exports.getImagePath = function(deviceType) {
-  return Promise.props({
-    cacheDirectory: resin.settings.get('cacheDirectory'),
-    fstype: getDeviceType(deviceType).get('yocto').get('fstype')
+exports.getImagePath = function(deviceType, version) {
+  return Promise["try"](function() {
+    return utils.validateVersion(version);
+  }).then(function() {
+    return Promise.props({
+      cacheDirectory: resin.settings.get('cacheDirectory'),
+      fstype: utils.getDeviceType(deviceType).get('yocto').get('fstype')
+    });
   }).then(function(results) {
     var extension;
     extension = results.fstype === 'zip' ? 'zip' : 'img';
-    return path.join(results.cacheDirectory, deviceType + "." + extension);
+    return path.join(results.cacheDirectory, deviceType + "-v" + version + "." + extension);
   });
 };
 
@@ -73,22 +72,23 @@ exports.getImagePath = function(deviceType) {
  * If the device image does not exist, return false.
  *
  * @param {String} deviceType - device type slug or alias
+ * @param {String} version - the exact resin OS version number
  * @returns {Promise<Boolean>} is image fresh
  *
  * @example
- * utils.isImageFresh('raspberry-pi').then (isFresh) ->
+ * utils.isImageFresh('raspberry-pi', '1.2.3').then (isFresh) ->
  * 	if isFresh
- * 		console.log('The Raspberry Pi image is fresh!')
+ * 		console.log('The Raspberry Pi image v1.2.3 is fresh!')
  */
 
-exports.isImageFresh = function(deviceType) {
-  return exports.getImagePath(deviceType).then(function(imagePath) {
+exports.isImageFresh = function(deviceType, version) {
+  return exports.getImagePath(deviceType, version).then(function(imagePath) {
     return utils.getFileCreatedDate(imagePath)["catch"](function() {});
   }).then(function(createdDate) {
     if (createdDate == null) {
       return false;
     }
-    return resin.models.os.getLastModified(deviceType).then(function(lastModifiedDate) {
+    return resin.models.os.getLastModified(deviceType, version).then(function(lastModifiedDate) {
       return lastModifiedDate < createdDate;
     });
   });
@@ -101,15 +101,16 @@ exports.isImageFresh = function(deviceType) {
  * @protected
  *
  * @param {String} deviceType - device type slug or alias
+ * @param {String} version - the exact resin OS version number
  * @returns {Promise<ReadStream>} image readable stream
  *
  * @example
- * utils.getImage('raspberry-pi').then (stream) ->
+ * utils.getImage('raspberry-pi', '1.2.3').then (stream) ->
  * 	stream.pipe(fs.createWriteStream('foo/bar.img'))
  */
 
-exports.getImage = function(deviceType) {
-  return exports.getImagePath(deviceType).then(function(imagePath) {
+exports.getImage = function(deviceType, version) {
+  return exports.getImagePath(deviceType, version).then(function(imagePath) {
     var stream;
     stream = fs.createReadStream(imagePath);
     stream.mime = mime.lookup(imagePath);
@@ -124,15 +125,16 @@ exports.getImage = function(deviceType) {
  * @protected
  *
  * @param {String} deviceType - device type slug or alias
+ * @param {String} version - the exact resin OS version number
  * @returns {Promise<WriteStream>} image writable stream
  *
  * @example
- * utils.getImageWritableStream('raspberry-pi').then (stream) ->
+ * utils.getImageWritableStream('raspberry-pi', '1.2.3').then (stream) ->
  * 	fs.createReadStream('foo/bar').pipe(stream)
  */
 
-exports.getImageWritableStream = function(deviceType) {
-  return exports.getImagePath(deviceType).then(function(imagePath) {
+exports.getImageWritableStream = function(deviceType, version) {
+  return exports.getImagePath(deviceType, version).then(function(imagePath) {
     return mkdirp(path.dirname(imagePath)).then(function() {
       return fs.createWriteStream(imagePath);
     });

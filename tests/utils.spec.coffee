@@ -1,6 +1,7 @@
 m = require('mochainon')
 fs = require('fs')
-utils = require('../lib/utils')
+
+utils = require('../build/utils')
 
 describe 'Utils:', ->
 

@@ -15,7 +15,9 @@ limitations under the License.
 ###
 
 Promise = require('bluebird')
+semver = require('semver')
 fs = Promise.promisifyAll(require('fs'))
+resin = require('resin-sdk-preconfigured')
 
 ###*
 # @summary Get file created date
@@ -31,3 +33,44 @@ fs = Promise.promisifyAll(require('fs'))
 ###
 exports.getFileCreatedDate = (file) ->
 	return fs.statAsync(file).get('ctime')
+
+###*
+# @summary Get the device type manifest
+# @function
+# @protected
+#
+# @param {String} deviceType - device type slug or alias
+# @returns {Promise<Object>} device type manifest
+###
+exports.getDeviceType = (deviceType) ->
+	resin.models.device.getManifestBySlug(deviceType)
+
+###*
+# @summary Get the most recent compatible version
+# @function
+# @protected
+#
+# @param {String} deviceType - device type slug or alias
+# @param {String} versionOrRange - supports the same version options
+# as `resin.models.os.getMaxSatisfyingVersion`.
+# See `manager.get` for the detailed explanation.
+# @returns {Promise<String>} the most recent compatible version.
+###
+exports.resolveVersion = (deviceType, versionOrRange) ->
+	resin.models.os.getMaxSatisfyingVersion(deviceType, versionOrRange)
+	.tap (version) ->
+		if not version
+			throw new Error('No such version for the device type')
+
+###*
+# @summary Check if the string is a valid semver version number
+# @function
+# @protected
+# @description Throws an error if the version is invalid
+#
+# @param {String} version - version number to validate
+# @returns {void} the most recent compatible version.
+###
+exports.validateVersion = (version) ->
+	if not semver.valid(version)
+		throw new Error('Invalid version number')
