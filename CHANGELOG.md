@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2017-03-23
+
 ### Changed
 
 - Slightly improved docs
@@ -134,6 +136,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implement manager.configure().
 
+[4.1.0]: https://github.com/resin-io/resin-image-manager/compare/v4.0.2...v4.1.0
 [4.0.2]: https://github.com/resin-io/resin-image-manager/compare/v4.0.1...v4.0.2
 [4.0.1]: https://github.com/resin-io/resin-image-manager/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/resin-io/resin-image-manager/compare/v3.2.6...v4.0.0
