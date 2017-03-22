@@ -7,14 +7,15 @@ Promise = require('bluebird')
 rimraf = Promise.promisify(require('rimraf'))
 fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
-manager = require('../lib/manager')
-cache = require('../lib/cache')
+
+manager = require('../build/manager')
+cache = require('../build/cache')
 
 describe 'Manager:', ->
 
 	describe '.get()', ->
 
-		describe 'given an existent image', ->
+		describe 'given the existing image', ->
 
 			beforeEach ->
 				@image = tmp.fileSync()
@@ -37,15 +38,18 @@ describe 'Manager:', ->
 					@cacheIsImageFresh.restore()
 
 				it 'should eventually become a readable stream of the cached image', (done) ->
+					@timeout(5000)
+
 					manager.get('raspberry-pi').then (stream) ->
 						result = ''
 
 						stream.on 'data', (chunk) ->
-							result += chunk
+							result += chunk.toString()
 
 						stream.on 'end', ->
 							m.chai.expect(result).to.equal('Cache image')
 							done()
+					return
 
 			describe 'given the image is not fresh', ->
 
@@ -78,6 +82,7 @@ describe 'Manager:', ->
 								fs.readFileAsync(@image.name, encoding: 'utf8').then (contents) ->
 									m.chai.expect(contents).to.equal('Download image')
 									done()
+						return
 
 					it 'should be able to read from the stream after a slight delay', (done) ->
 						manager.get('raspberry-pi').then (stream) ->
@@ -94,8 +99,9 @@ describe 'Manager:', ->
 							pass.on 'end', ->
 								m.chai.expect(result).to.equal('Download image')
 								done()
+						return
 
-				describe 'given a stream with a mime property', ->
+				describe 'given a stream with the mime property', ->
 
 					beforeEach ->
 						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
@@ -107,7 +113,7 @@ describe 'Manager:', ->
 					afterEach ->
 						@osDownloadStub.restore()
 
-					it 'should preserve the property', (done) ->
-						manager.get('raspberry-pi').then (stream) ->
+					it 'should preserve the property', ->
+						manager.get('raspberry-pi')
+						.then (stream) ->
 							m.chai.expect(stream.mime).to.equal('application/zip')
-						.nodeify(done)

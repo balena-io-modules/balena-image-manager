@@ -31,60 +31,40 @@ Documentation
 
 
 * [manager](#module_manager)
-    * [.get(slug)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
+    * [.get(deviceType, versionOrRange)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
     * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
-    * [.pipeTemporal(stream)](#module_manager.pipeTemporal) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="module_manager.get"></a>
-### manager.get(slug) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
+
+### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
 This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
 
 **Kind**: static method of <code>[manager](#module_manager)</code>  
 **Summary**: Get a device operating system image  
 **Returns**: <code>Promise.&lt;ReadStream&gt;</code> - image readable stream  
-**Access:** public  
+**Access**: public  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| slug | <code>String</code> | device type slug |
+| deviceType | <code>String</code> | device type slug or alias |
+| versionOrRange | <code>String</code> | can be one of * the exact version number, in which case it is used if the version is supported, or the promise is rejected, * a [semver](https://www.npmjs.com/package/semver)-compatible range specification, in which case the most recent satisfying version is used if it exists, or the promise is rejected, * `'latest'` in which case the most recent version is used, including pre-releases, * `'recommended'` in which case the recommended version is used, i.e. the most recent version excluding pre-releases, the promise is rejected if only pre-release versions are available, * `'default'` in which case the recommended version is used if available, or `latest` is used otherwise. Defaults to `'latest'`. |
 
 **Example**  
 ```js
-manager.get('raspberry-pi').then (stream) ->
+manager.get('raspberry-pi', 'default').then (stream) ->
 	stream.pipe(fs.createWriteStream('foo/bar.img'))
 ```
 <a name="module_manager.cleanCache"></a>
+
 ### manager.cleanCache() ⇒ <code>Promise</code>
 Useful to manually force an image to be re-downloaded.
 
 **Kind**: static method of <code>[manager](#module_manager)</code>  
 **Summary**: Clean the saved images cache  
-**Access:** public  
+**Access**: public  
 **Example**  
 ```js
 manager.cleanCache()
-```
-<a name="module_manager.pipeTemporal"></a>
-### manager.pipeTemporal(stream) ⇒ <code>Promise.&lt;String&gt;</code>
-If the image is a zip directory, it's uncompressed to a temporal location.
-
-Make you *delete the temporal file* after you're done with it.
-
-**Kind**: static method of <code>[manager](#module_manager)</code>  
-**Summary**: Pipe image stream to a temporal location  
-**Returns**: <code>Promise.&lt;String&gt;</code> - temporal location  
-**Access:** public  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| stream | <code>Stream</code> | image stream |
-
-**Example**  
-```js
-manager.get('raspberry-pi').then (stream) ->
-	manager.pipeTemporal(stream)
-.then (temporalPath) ->
-	console.log("The image was piped to #{temporalPath}")
 ```
 
 Support
