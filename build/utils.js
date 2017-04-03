@@ -15,7 +15,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
  */
-var Promise, fs, resin, semver;
+var Promise, RESINOS_VERSION_REGEX, fs, resin, semver;
 
 Promise = require('bluebird');
 
@@ -24,6 +24,8 @@ semver = require('semver');
 fs = Promise.promisifyAll(require('fs'));
 
 resin = require('resin-sdk-preconfigured');
+
+RESINOS_VERSION_REGEX = /v?\d+\.\d+\.\d+(\.rev\d+)?((\-|\+).+)?/;
 
 
 /**
@@ -90,7 +92,7 @@ exports.resolveVersion = function(deviceType, versionOrRange) {
  */
 
 exports.validateVersion = function(version) {
-  if (!semver.valid(version)) {
+  if (!RESINOS_VERSION_REGEX.test(version)) {
     throw new Error('Invalid version number');
   }
 };

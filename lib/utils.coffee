@@ -19,6 +19,8 @@ semver = require('semver')
 fs = Promise.promisifyAll(require('fs'))
 resin = require('resin-sdk-preconfigured')
 
+RESINOS_VERSION_REGEX = /v?\d+\.\d+\.\d+(\.rev\d+)?((\-|\+).+)?/
+
 ###*
 # @summary Get file created date
 # @function
@@ -72,5 +74,5 @@ exports.resolveVersion = (deviceType, versionOrRange) ->
 # @returns {void} the most recent compatible version.
 ###
 exports.validateVersion = (version) ->
-	if not semver.valid(version)
+	if not RESINOS_VERSION_REGEX.test(version)
 		throw new Error('Invalid version number')
