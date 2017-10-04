@@ -120,8 +120,15 @@ exports.getImageWritableStream = (deviceType, version) ->
 			# Ensure the cache directory exists, to prevent
 			# ENOENT errors when trying to write to it.
 			mkdirp(path.dirname(imagePath)).then ->
-				return fs.createWriteStream(imagePath)
+				# Append .inprogress to streams, move them to the right location only on success
+				inProgressPath = imagePath + '.inprogress'
+				stream = fs.createWriteStream(inProgressPath)
 
+				# Call .isCompleted on the stream
+				stream.persistCache = ->
+					fs.renameAsync(inProgressPath, imagePath)
+
+				return stream
 ###*
 # @summary Clean the cache
 # @function
