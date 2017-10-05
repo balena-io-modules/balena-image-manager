@@ -201,6 +201,7 @@ describe 'Cache:', ->
 					stringStream = stringToStream('Lorem ipsum dolor sit amet')
 					stringStream.pipe(stream)
 					stream.on 'finish', =>
+						stream.persistCache()
 						fs.readFileAsync(@image.name, encoding: 'utf8').then (contents) ->
 							m.chai.expect(contents).to.equal('Lorem ipsum dolor sit amet')
 							done()

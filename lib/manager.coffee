@@ -36,6 +36,7 @@ doDownload = (deviceType, version) ->
 		cache.getImageWritableStream(deviceType, version)
 		.then (cacheStream) ->
 			pass.pipe(cacheStream)
+			pass.on('end', cacheStream.persistCache)
 
 			# If we return `pass` directly, the client will not be able
 			# to read all data from it after a delay, since it will be
@@ -46,6 +47,11 @@ doDownload = (deviceType, version) ->
 			pass2.mime = imageStream.mime
 			imageStream.on 'progress', (state) ->
 				pass2.emit('progress', state)
+
+			imageStream.on 'error', (err) ->
+				cacheStream.removeCache()
+				.then ->
+					pass2.emit('error', err)
 
 			return pass.pipe(pass2)
 

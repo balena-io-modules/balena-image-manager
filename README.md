@@ -39,7 +39,7 @@ Documentation
 ### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
 This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
 
-**Kind**: static method of <code>[manager](#module_manager)</code>  
+**Kind**: static method of [<code>manager</code>](#module_manager)  
 **Summary**: Get a device operating system image  
 **Returns**: <code>Promise.&lt;ReadStream&gt;</code> - image readable stream  
 **Access**: public  
@@ -59,7 +59,7 @@ manager.get('raspberry-pi', 'default').then (stream) ->
 ### manager.cleanCache() ⇒ <code>Promise</code>
 Useful to manually force an image to be re-downloaded.
 
-**Kind**: static method of <code>[manager](#module_manager)</code>  
+**Kind**: static method of [<code>manager</code>](#module_manager)  
 **Summary**: Clean the saved images cache  
 **Access**: public  
 **Example**  
