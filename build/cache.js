@@ -143,6 +143,9 @@ exports.getImageWritableStream = function(deviceType, version) {
       stream.persistCache = function() {
         return fs.renameAsync(inProgressPath, imagePath);
       };
+      stream.removeCache = function() {
+        return fs.unlinkAsync(inProgressPath);
+      };
       return stream;
     });
   });

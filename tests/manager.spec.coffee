@@ -1,3 +1,4 @@
+stream = require('stream')
 m = require('mochainon')
 resin = require('resin-sdk-preconfigured')
 path = require('path')
@@ -99,6 +100,36 @@ describe 'Manager:', ->
 							pass.on 'end', ->
 								m.chai.expect(result).to.equal('Download image')
 								done()
+						return
+
+				describe 'given a failing download', ->
+
+					beforeEach ->
+						@osDownloadStream = new stream.PassThrough()
+						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
+						@osDownloadStub.returns(Promise.resolve(@osDownloadStream))
+
+					afterEach ->
+						@osDownloadStub.restore()
+
+					it 'should clean up the in progress cached stream if an error occurs', (done) ->
+						manager.get('raspberry-pi').then (stream) =>
+							stream.on 'data', (chunk) =>
+								# After the first chunk, error
+								@osDownloadStream.emit('error')
+
+							stream.on 'error', =>
+								fs.statAsync(@image.name + '.inprogress')
+								.then ->
+									throw new m.chai.AssertionError('Image cache should be deleted on failure')
+								.catch code: 'ENOENT', =>
+									fs.readFileAsync(@image.name, encoding: 'utf8')
+								.then (contents) ->
+									m.chai.expect(contents).to.equal('Cache image')
+									done()
+
+							stringToStream('Download image').pipe(@osDownloadStream)
+
 						return
 
 				describe 'given a stream with the mime property', ->

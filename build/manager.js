@@ -45,6 +45,11 @@ doDownload = function(deviceType, version) {
       imageStream.on('progress', function(state) {
         return pass2.emit('progress', state);
       });
+      imageStream.on('error', function(err) {
+        return cacheStream.removeCache().then(function() {
+          return pass2.emit('error', err);
+        });
+      });
       return pass.pipe(pass2);
     });
   });

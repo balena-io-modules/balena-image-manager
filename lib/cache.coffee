@@ -128,6 +128,9 @@ exports.getImageWritableStream = (deviceType, version) ->
 				stream.persistCache = ->
 					fs.renameAsync(inProgressPath, imagePath)
 
+				stream.removeCache = ->
+					fs.unlinkAsync(inProgressPath)
+
 				return stream
 ###*
 # @summary Clean the cache

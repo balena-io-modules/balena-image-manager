@@ -48,6 +48,11 @@ doDownload = (deviceType, version) ->
 			imageStream.on 'progress', (state) ->
 				pass2.emit('progress', state)
 
+			imageStream.on 'error', (err) ->
+				cacheStream.removeCache()
+				.then ->
+					pass2.emit('error', err)
+
 			return pass.pipe(pass2)
 
 ###*
