@@ -7,7 +7,8 @@ os = require('os')
 tmp = require('tmp')
 mockFs = require('mock-fs')
 stringToStream = require('string-to-stream')
-resin = require('resin-sdk-preconfigured')
+
+{ resin } = require('./test-setup')
 
 cache = require('../build/cache')
 utils = require('../build/utils')

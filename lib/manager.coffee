@@ -20,7 +20,7 @@ limitations under the License.
 
 stream = require('stream')
 fs = require('fs')
-resin = require('resin-sdk-preconfigured')
+resin = require('resin-sdk').fromSharedOptions()
 cache = require('./cache')
 utils = require('./utils')
 
