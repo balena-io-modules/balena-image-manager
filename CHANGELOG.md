@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+- Ensure that .get for a specific version always uses exactly that version,
+  as long as exists, even if there are other equivalent options.
 - *BREAKING*: Upgrade to resin-sdk using fromSharedOptions. Configuration should
   now be set using resinSdk.setSharedOptions, not using resin-settings.
 
