@@ -3,14 +3,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [5.0.0] - 2017-10-17
 
 - Ensure that .get for a specific version always uses exactly that version,
   as long as exists, even if there are other equivalent options.
 - *BREAKING*: Upgrade to resin-sdk using fromSharedOptions. Configuration should
   now be set using resinSdk.setSharedOptions, not using resin-settings.
 
-## [4.2.1] - 2017-10-05
+## [4.1.2] - 2017-10-05
 
 - Don't persist downloads to cache until they complete
 
@@ -153,6 +153,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Implement manager.configure().
 
+[5.0.0]: https://github.com/resin-io/resin-image-manager/compare/v4.2.1...v5.0.0
 [4.1.2]: https://github.com/resin-io/resin-image-manager/compare/v4.1.1...v4.1.2
 [4.1.1]: https://github.com/resin-io/resin-image-manager/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/resin-io/resin-image-manager/compare/v4.0.2...v4.1.0
