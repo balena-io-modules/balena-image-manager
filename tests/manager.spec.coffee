@@ -1,6 +1,5 @@
 stream = require('stream')
 m = require('mochainon')
-resin = require('resin-sdk-preconfigured')
 path = require('path')
 tmp = require('tmp')
 PassThrough = require('stream').PassThrough
@@ -8,6 +7,8 @@ Promise = require('bluebird')
 rimraf = Promise.promisify(require('rimraf'))
 fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
+
+{ resin } = require('./test-setup')
 
 manager = require('../build/manager')
 cache = require('../build/cache')

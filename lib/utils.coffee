@@ -17,7 +17,7 @@ limitations under the License.
 Promise = require('bluebird')
 semver = require('semver')
 fs = Promise.promisifyAll(require('fs'))
-resin = require('resin-sdk-preconfigured')
+resin = require('resin-sdk').fromSharedOptions()
 
 RESINOS_VERSION_REGEX = /v?\d+\.\d+\.\d+(\.rev\d+)?((\-|\+).+)?/
 
