@@ -1,5 +1,5 @@
 ###
-Copyright 2016 Resin.io
+Copyright 2016 Balena
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ fs = Promise.promisifyAll(require('fs'))
 mkdirp = Promise.promisify(require('mkdirp'))
 rimraf = Promise.promisify(require('rimraf'))
 mime = require('mime')
-resin = require('resin-sdk').fromSharedOptions()
+balena = require('balena-sdk').fromSharedOptions()
 path = require('path')
 utils = require('./utils')
 
@@ -29,7 +29,7 @@ utils = require('./utils')
 # @protected
 #
 # @param {String} deviceType - device type slug or alias
-# @param {String} version - the exact resin OS version number
+# @param {String} version - the exact balenaOS version number
 # @returns {Promise<String>} image path
 #
 # @example
@@ -41,7 +41,7 @@ exports.getImagePath = (deviceType, version) ->
 		utils.validateVersion(version)
 	.then ->
 		Promise.props
-			cacheDirectory: resin.settings.get('cacheDirectory')
+			cacheDirectory: balena.settings.get('cacheDirectory')
 			fstype: utils.getDeviceType(deviceType)
 				.get('yocto')
 				.get('fstype')
@@ -59,7 +59,7 @@ exports.getImagePath = (deviceType, version) ->
 # If the device image does not exist, return false.
 #
 # @param {String} deviceType - device type slug or alias
-# @param {String} version - the exact resin OS version number
+# @param {String} version - the exact balenaOS version number
 # @returns {Promise<Boolean>} is image fresh
 #
 # @example
@@ -77,7 +77,7 @@ exports.isImageFresh = (deviceType, version) ->
 	.then (createdDate) ->
 		return false if not createdDate?
 
-		return resin.models.os.getLastModified(deviceType, version)
+		return balena.models.os.getLastModified(deviceType, version)
 			.then (lastModifiedDate) ->
 				return lastModifiedDate < createdDate
 
@@ -87,7 +87,7 @@ exports.isImageFresh = (deviceType, version) ->
 # @protected
 #
 # @param {String} deviceType - device type slug or alias
-# @param {String} version - the exact resin OS version number
+# @param {String} version - the exact balenaOS version number
 # @returns {Promise<ReadStream>} image readable stream
 #
 # @example
@@ -107,7 +107,7 @@ exports.getImage = (deviceType, version) ->
 # @protected
 #
 # @param {String} deviceType - device type slug or alias
-# @param {String} version - the exact resin OS version number
+# @param {String} version - the exact balenaOS version number
 # @returns {Promise<WriteStream>} image writable stream
 #
 # @example
@@ -143,4 +143,4 @@ exports.getImageWritableStream = (deviceType, version) ->
 # cache.clean()
 ###
 exports.clean = ->
-	resin.settings.get('cacheDirectory').then(rimraf)
+	balena.settings.get('cacheDirectory').then(rimraf)

@@ -1,29 +1,29 @@
-resin-image-manager
+balena-image-manager
 -------------------
 
-[![npm version](https://badge.fury.io/js/resin-image-manager.svg)](http://badge.fury.io/js/resin-image-manager)
-[![dependencies](https://david-dm.org/resin-io/resin-image-manager.png)](https://david-dm.org/resin-io/resin-image-manager.png)
-[![Build Status](https://travis-ci.org/resin-io/resin-image-manager.svg?branch=master)](https://travis-ci.org/resin-io/resin-image-manager)
-[![Build status](https://ci.appveyor.com/api/projects/status/2nxg1uydksvey0g8?svg=true)](https://ci.appveyor.com/project/jviotti/resin-image-manager)
+[![npm version](https://badge.fury.io/js/balena-image-manager.svg)](http://badge.fury.io/js/balena-image-manager)
+[![dependencies](https://david-dm.org/balena-io/balena-image-manager.png)](https://david-dm.org/balena-io/balena-image-manager.png)
+[![Build Status](https://travis-ci.org/balena-io/balena-image-manager.svg?branch=master)](https://travis-ci.org/balena-io/balena-image-manager)
+[![Build status](https://ci.appveyor.com/api/projects/status/2nxg1uydksvey0g8?svg=true)](https://ci.appveyor.com/project/jviotti/balena-image-manager)
 
-Join our online chat at [![Gitter chat](https://badges.gitter.im/resin-io/chat.png)](https://gitter.im/resin-io/chat)
+Join our online chat at [![Gitter chat](https://badges.gitter.im/balena-io/chat.png)](https://gitter.im/balena-io/chat)
 
 Manage device base operating systems resources with caching support.
 
 Role
 ----
 
-The intention of this module is to provide low level access to how a Resin.io device image is downloaded, cached and evaluated for freshness.
+The intention of this module is to provide low level access to how a balena device image is downloaded, cached and evaluated for freshness.
 
 **THIS MODULE IS LOW LEVEL AND IS NOT MEANT TO BE USED BY END USERS DIRECTLY**.
 
 Installation
 ------------
 
-Install `resin-image-manager` by running:
+Install `balena-image-manager` by running:
 
 ```sh
-$ npm install --save resin-image-manager
+$ npm install --save balena-image-manager
 ```
 
 Documentation
@@ -37,7 +37,7 @@ Documentation
 <a name="module_manager.get"></a>
 
 ### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
-This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
+This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io/balena-settings-client).
 
 **Kind**: static method of [<code>manager</code>](#module_manager)  
 **Summary**: Get a device operating system image  
@@ -70,7 +70,7 @@ manager.cleanCache()
 Support
 -------
 
-If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-image-manager/issues/new) on GitHub and the Resin.io team will be happy to help.
+If you're having any problem, please [raise an issue](https://github.com/balena-io/balena-image-manager/issues/new) on GitHub and the balena team will be happy to help.
 
 Tests
 -----
@@ -84,8 +84,8 @@ $ gulp test
 Contribute
 ----------
 
-- Issue Tracker: [github.com/resin-io/resin-image-manager/issues](https://github.com/resin-io/resin-image-manager/issues)
-- Source Code: [github.com/resin-io/resin-image-manager](https://github.com/resin-io/resin-image-manager)
+- Issue Tracker: [github.com/balena-io/balena-image-manager/issues](https://github.com/balena-io/balena-image-manager/issues)
+- Source Code: [github.com/balena-io/balena-image-manager](https://github.com/balena-io/balena-image-manager)
 
 Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
 

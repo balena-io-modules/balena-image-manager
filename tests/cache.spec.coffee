@@ -8,7 +8,7 @@ tmp = require('tmp')
 mockFs = require('mock-fs')
 stringToStream = require('string-to-stream')
 
-{ resin } = require('./test-setup')
+{ balena } = require('./test-setup')
 
 cache = require('../build/cache')
 utils = require('../build/utils')
@@ -20,24 +20,24 @@ describe 'Cache:', ->
 		describe 'given a cache directory', ->
 
 			beforeEach ->
-				@resinSettingsGetStub = m.sinon.stub(resin.settings, 'get')
+				@balenaSettingsGetStub = m.sinon.stub(balena.settings, 'get')
 
 				if os.platform() is 'win32'
-					@resinSettingsGetStub
+					@balenaSettingsGetStub
 						.withArgs('cacheDirectory')
-						.returns(Promise.resolve('C:\\Users\\johndoe\\_resin\\cache'))
+						.returns(Promise.resolve('C:\\Users\\johndoe\\_balena\\cache'))
 				else
-					@resinSettingsGetStub
+					@balenaSettingsGetStub
 						.withArgs('cacheDirectory')
-						.returns(Promise.resolve('/Users/johndoe/.resin/cache'))
+						.returns(Promise.resolve('/Users/johndoe/.balena/cache'))
 
 			afterEach ->
-				@resinSettingsGetStub.restore()
+				@balenaSettingsGetStub.restore()
 
 			describe 'given valid slugs', ->
 
 				beforeEach ->
-					@getManifestBySlugStub = m.sinon.stub(resin.models.device, 'getManifestBySlug')
+					@getManifestBySlugStub = m.sinon.stub(balena.models.device, 'getManifestBySlug')
 					@getManifestBySlugStub.withArgs('raspberry-pi').returns Promise.resolve
 						yocto:
 							fstype: 'resin-sdcard'
@@ -57,10 +57,10 @@ describe 'Cache:', ->
 				it 'should eventually equal the correct path', ->
 					promise = cache.getImagePath('raspberry-pi', '1.2.3')
 					if os.platform() is 'win32'
-						imagePath = 'C:\\Users\\johndoe\\_resin\\cache\\raspberry-pi-v1.2.3.img'
+						imagePath = 'C:\\Users\\johndoe\\_balena\\cache\\raspberry-pi-v1.2.3.img'
 						m.chai.expect(promise).to.eventually.equal(imagePath)
 					else
-						imagePath = '/Users/johndoe/.resin/cache/raspberry-pi-v1.2.3.img'
+						imagePath = '/Users/johndoe/.balena/cache/raspberry-pi-v1.2.3.img'
 						m.chai.expect(promise).to.eventually.equal(imagePath)
 
 				it 'should use a zip extension for directory images', ->
@@ -77,10 +77,10 @@ describe 'Cache:', ->
 		describe 'given the raspberry-pi manifest', ->
 
 			beforeEach ->
-				@getManifestBySlugStub = m.sinon.stub(resin.models.device, 'getManifestBySlug')
+				@getManifestBySlugStub = m.sinon.stub(balena.models.device, 'getManifestBySlug')
 				@getManifestBySlugStub.returns Promise.resolve
 					yocto:
-						fstype: 'resin-sdcard'
+						fstype: 'balena-sdcard'
 
 			afterEach ->
 				@getManifestBySlugStub.restore()
@@ -110,7 +110,7 @@ describe 'Cache:', ->
 				describe 'given the file was created before the os last modified time', ->
 
 					beforeEach ->
-						@osGetLastModified = m.sinon.stub(resin.models.os, 'getLastModified')
+						@osGetLastModified = m.sinon.stub(balena.models.os, 'getLastModified')
 						@osGetLastModified.returns(Promise.resolve(new Date('2014-02-01T00:00:00.000Z')))
 
 					afterEach ->
@@ -123,7 +123,7 @@ describe 'Cache:', ->
 				describe 'given the file was created after the os last modified time', ->
 
 					beforeEach ->
-						@osGetLastModified = m.sinon.stub(resin.models.os, 'getLastModified')
+						@osGetLastModified = m.sinon.stub(balena.models.os, 'getLastModified')
 						@osGetLastModified.returns(Promise.resolve(new Date('2013-01-01T00:00:00.000Z')))
 
 					afterEach ->
@@ -136,7 +136,7 @@ describe 'Cache:', ->
 				describe 'given the file was created just at the os last modified time', ->
 
 					beforeEach ->
-						@osGetLastModified = m.sinon.stub(resin.models.os, 'getLastModified')
+						@osGetLastModified = m.sinon.stub(balena.models.os, 'getLastModified')
 						@osGetLastModified.returns(Promise.resolve(new Date('2014-00-01T00:00:00.000Z')))
 
 					afterEach ->
@@ -213,7 +213,7 @@ describe 'Cache:', ->
 		describe 'given the cache with saved images', ->
 
 			beforeEach ->
-				resin.settings.get('cacheDirectory')
+				balena.settings.get('cacheDirectory')
 				.then (cacheDirectory) =>
 					@cacheDirectory = cacheDirectory
 					mockFs
@@ -238,7 +238,7 @@ describe 'Cache:', ->
 		describe 'given no cache', ->
 
 			beforeEach ->
-				resin.settings.get('cacheDirectory').then (cacheDirectory) =>
+				balena.settings.get('cacheDirectory').then (cacheDirectory) =>
 					@cacheDirectory = cacheDirectory
 					mockFs({})
 
