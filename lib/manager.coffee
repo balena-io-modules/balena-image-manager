@@ -1,5 +1,5 @@
 ###
-Copyright 2016 Resin.io
+Copyright 2016 Balena
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ limitations under the License.
 
 stream = require('stream')
 fs = require('fs')
-resin = require('resin-sdk').fromSharedOptions()
+balena = require('balena-sdk').fromSharedOptions()
 cache = require('./cache')
 utils = require('./utils')
 
 doDownload = (deviceType, version) ->
-	resin.models.os.download(deviceType, version)
+	balena.models.os.download(deviceType, version)
 	.then (imageStream) ->
 		# Piping to a PassThrough stream is needed to be able
 		# to then pipe the stream to multiple destinations.
@@ -61,7 +61,7 @@ doDownload = (deviceType, version) ->
 # @public
 #
 # @description
-# This function saves a copy of the downloaded image in the cache directory setting specified in [resin-settings-client](https://github.com/resin-io/resin-settings-client).
+# This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io/balena-settings-client).
 #
 # @param {String} deviceType - device type slug or alias
 # @param {String} versionOrRange - can be one of

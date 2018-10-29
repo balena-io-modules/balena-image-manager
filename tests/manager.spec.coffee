@@ -8,7 +8,7 @@ rimraf = Promise.promisify(require('rimraf'))
 fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
 
-{ resin } = require('./test-setup')
+{ balena } = require('./test-setup')
 
 manager = require('../build/manager')
 cache = require('../build/cache')
@@ -65,7 +65,7 @@ describe 'Manager:', ->
 				describe 'given a valid download endpoint', ->
 
 					beforeEach ->
-						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
+						@osDownloadStub = m.sinon.stub(balena.models.os, 'download')
 						@osDownloadStub.returns(Promise.resolve(stringToStream('Download image')))
 
 					afterEach ->
@@ -107,7 +107,7 @@ describe 'Manager:', ->
 
 					beforeEach ->
 						@osDownloadStream = new stream.PassThrough()
-						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
+						@osDownloadStub = m.sinon.stub(balena.models.os, 'download')
 						@osDownloadStub.returns(Promise.resolve(@osDownloadStream))
 
 					afterEach ->
@@ -136,7 +136,7 @@ describe 'Manager:', ->
 				describe 'given a stream with the mime property', ->
 
 					beforeEach ->
-						@osDownloadStub = m.sinon.stub(resin.models.os, 'download')
+						@osDownloadStub = m.sinon.stub(balena.models.os, 'download')
 						message = 'Lorem ipsum dolor sit amet'
 						stream = stringToStream(message)
 						stream.mime = 'application/zip'

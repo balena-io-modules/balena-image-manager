@@ -1,5 +1,5 @@
 ###
-Copyright 2016 Resin.io
+Copyright 2016 Balena
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ limitations under the License.
 Promise = require('bluebird')
 semver = require('semver')
 fs = Promise.promisifyAll(require('fs'))
-resin = require('resin-sdk').fromSharedOptions()
+balena = require('balena-sdk').fromSharedOptions()
 
 RESINOS_VERSION_REGEX = /v?\d+\.\d+\.\d+(\.rev\d+)?((\-|\+).+)?/
 
@@ -45,7 +45,7 @@ exports.getFileCreatedDate = (file) ->
 # @returns {Promise<Object>} device type manifest
 ###
 exports.getDeviceType = (deviceType) ->
-	resin.models.device.getManifestBySlug(deviceType)
+	balena.models.device.getManifestBySlug(deviceType)
 
 ###*
 # @summary Get the most recent compatible version
@@ -54,12 +54,12 @@ exports.getDeviceType = (deviceType) ->
 #
 # @param {String} deviceType - device type slug or alias
 # @param {String} versionOrRange - supports the same version options
-# as `resin.models.os.getMaxSatisfyingVersion`.
+# as `balena.models.os.getMaxSatisfyingVersion`.
 # See `manager.get` for the detailed explanation.
 # @returns {Promise<String>} the most recent compatible version.
 ###
 exports.resolveVersion = (deviceType, versionOrRange) ->
-	resin.models.os.getMaxSatisfyingVersion(deviceType, versionOrRange)
+	balena.models.os.getMaxSatisfyingVersion(deviceType, versionOrRange)
 	.tap (version) ->
 		if not version
 			throw new Error('No such version for the device type')
