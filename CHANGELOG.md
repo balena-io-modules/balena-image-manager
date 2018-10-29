@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## v6.0.0 - 2018-10-29
+
+* Drop support for Node 4 [Tim Perry]
+* Rename everything 'resin' to 'balena' [Tim Perry]
+
 - Ensure that .get for a specific version always uses exactly that version,
   as long as exists, even if there are other equivalent options.
 - *BREAKING*: Upgrade to resin-sdk using fromSharedOptions. Configuration should
