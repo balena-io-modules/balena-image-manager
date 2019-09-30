@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 6.1.0 - 2019-09-30
+
+* .travis.yml: Limit testing up to node v10 since gulp doesn't work on v12 [Thodoris Greasidis]
+* Bump balena-sdk to v12.12.0 to stop using image maker endpoints [Thodoris Greasidis]
+
 ## v6.0.0 - 2018-10-29
 
 * Drop support for Node 4 [Tim Perry]
