@@ -2,11 +2,11 @@ balena-image-manager
 -------------------
 
 [![npm version](https://badge.fury.io/js/balena-image-manager.svg)](http://badge.fury.io/js/balena-image-manager)
-[![dependencies](https://david-dm.org/balena-io/balena-image-manager.png)](https://david-dm.org/balena-io/balena-image-manager.png)
-[![Build Status](https://travis-ci.org/balena-io/balena-image-manager.svg?branch=master)](https://travis-ci.org/balena-io/balena-image-manager)
+[![dependencies](https://david-dm.org/balena-io-modules/balena-image-manager.png)](https://david-dm.org/balena-io-modules/balena-image-manager.png)
+[![Build Status](https://travis-ci.org/balena-io-modules/balena-image-manager.svg?branch=master)](https://travis-ci.org/balena-io-modules/balena-image-manager)
 [![Build status](https://ci.appveyor.com/api/projects/status/2nxg1uydksvey0g8?svg=true)](https://ci.appveyor.com/project/jviotti/balena-image-manager)
 
-Join our online chat at [![Gitter chat](https://badges.gitter.im/balena-io/chat.png)](https://gitter.im/balena-io/chat)
+Join our online chat at [![Gitter chat](https://badges.gitter.im/balena-io-modules/chat.png)](https://gitter.im/balena-io-modules/chat)
 
 Manage device base operating systems resources with caching support.
 
@@ -37,7 +37,7 @@ Documentation
 <a name="module_manager.get"></a>
 
 ### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
-This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io/balena-settings-client).
+This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io-modules/balena-settings-client).
 
 **Kind**: static method of [<code>manager</code>](#module_manager)  
 **Summary**: Get a device operating system image  
@@ -70,7 +70,7 @@ manager.cleanCache()
 Support
 -------
 
-If you're having any problem, please [raise an issue](https://github.com/balena-io/balena-image-manager/issues/new) on GitHub and the balena team will be happy to help.
+If you're having any problem, please [raise an issue](https://github.com/balena-io-modules/balena-image-manager/issues/new) on GitHub and the balena team will be happy to help.
 
 Tests
 -----
@@ -84,8 +84,8 @@ $ gulp test
 Contribute
 ----------
 
-- Issue Tracker: [github.com/balena-io/balena-image-manager/issues](https://github.com/balena-io/balena-image-manager/issues)
-- Source Code: [github.com/balena-io/balena-image-manager](https://github.com/balena-io/balena-image-manager)
+- Issue Tracker: [github.com/balena-io-modules/balena-image-manager/issues](https://github.com/balena-io-modules/balena-image-manager/issues)
+- Source Code: [github.com/balena-io-modules/balena-image-manager](https://github.com/balena-io-modules/balena-image-manager)
 
 Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
 
