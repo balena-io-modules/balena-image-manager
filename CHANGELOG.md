@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 6.1.1 - 2020-01-24
+
+* Update dependencies and repo links [Pagan Gazzard]
+
 ## 6.1.0 - 2019-09-30
 
 * .travis.yml: Limit testing up to node v10 since gulp doesn't work on v12 [Thodoris Greasidis]
