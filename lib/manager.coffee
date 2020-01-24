@@ -61,7 +61,7 @@ doDownload = (deviceType, version) ->
 # @public
 #
 # @description
-# This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io/balena-settings-client).
+# This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io-modules/balena-settings-client).
 #
 # @param {String} deviceType - device type slug or alias
 # @param {String} versionOrRange - can be one of
