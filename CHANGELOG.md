@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 6.1.2 - 2020-03-04
+
+* Update dependencies [Pagan Gazzard]
+
 ## 6.1.1 - 2020-01-24
 
 * Update dependencies and repo links [Pagan Gazzard]
