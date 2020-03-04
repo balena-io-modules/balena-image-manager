@@ -22,7 +22,7 @@ gulp.task 'test', ->
 	gulp.src(OPTIONS.files.tests, read: false)
 		.pipe(mocha({
 			reporter: 'spec',
-			compilers: 'coffee:coffee-script/register'
+			compilers: 'coffee:coffeescript/register'
 		}))
 
 gulp.task 'lint', ->
@@ -32,10 +32,10 @@ gulp.task 'lint', ->
 		}))
 		.pipe(coffeelint.reporter())
 
-gulp.task 'build', [
+gulp.task 'build', gulp.series [
 	'lint'
 	'coffee'
 ]
 
-gulp.task 'watch', [ 'build' ], ->
+gulp.task 'watch', gulp.series [ 'build' ], ->
 	gulp.watch(OPTIONS.files.coffee, [ 'build' ])

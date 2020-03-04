@@ -16,7 +16,7 @@ limitations under the License.
 
 Promise = require('bluebird')
 fs = Promise.promisifyAll(require('fs'))
-mkdirp = Promise.promisify(require('mkdirp'))
+mkdirp = require('mkdirp')
 rimraf = Promise.promisify(require('rimraf'))
 mime = require('mime')
 balena = require('balena-sdk').fromSharedOptions()
@@ -98,7 +98,8 @@ exports.getImage = (deviceType, version) ->
 	exports.getImagePath(deviceType, version)
 		.then (imagePath) ->
 			stream = fs.createReadStream(imagePath)
-			stream.mime = mime.lookup(imagePath)
+			# Default to application/octet-stream if we could not find a more specific mime type
+			stream.mime = mime.getType(imagePath) ? 'application/octet-stream'
 			return stream
 
 ###*
