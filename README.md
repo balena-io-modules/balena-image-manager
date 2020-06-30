@@ -31,17 +31,17 @@ Documentation
 
 
 * [manager](#module_manager)
-    * [.get(deviceType, versionOrRange)](#module_manager.get) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
+    * [.get(deviceType, versionOrRange)](#module_manager.get) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
     * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
 
 <a name="module_manager.get"></a>
 
-### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;ReadStream&gt;</code>
+### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
 This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io-modules/balena-settings-client).
 
 **Kind**: static method of [<code>manager</code>](#module_manager)  
 **Summary**: Get a device operating system image  
-**Returns**: <code>Promise.&lt;ReadStream&gt;</code> - image readable stream  
+**Returns**: <code>Promise.&lt;NodeJS.ReadableStream&gt;</code> - image readable stream  
 **Access**: public  
 
 | Param | Type | Description |
