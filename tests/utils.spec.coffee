@@ -11,8 +11,8 @@ describe 'Utils:', ->
 
 			beforeEach ->
 				@date = new Date(2014, 1, 1)
-				@fsStatStub = m.sinon.stub(fs, 'stat')
-				@fsStatStub.withArgs('foo').yields(null, ctime: @date)
+				@fsStatStub = m.sinon.stub(fs.promises, 'stat')
+				@fsStatStub.withArgs('foo').returns(Promise.resolve(ctime: @date))
 
 			afterEach ->
 				@fsStatStub.restore()
@@ -24,8 +24,8 @@ describe 'Utils:', ->
 		describe 'given the file does not exist', ->
 
 			beforeEach ->
-				@fsStatStub = m.sinon.stub(fs, 'stat')
-				@fsStatStub.withArgs('foo').yields(new Error('ENOENT, stat \'foo\''))
+				@fsStatStub = m.sinon.stub(fs.promises, 'stat')
+				@fsStatStub.withArgs('foo').returns(Promise.reject(new Error('ENOENT, stat \'foo\'')))
 
 			afterEach ->
 				@fsStatStub.restore()
