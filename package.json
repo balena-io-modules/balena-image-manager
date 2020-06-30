@@ -33,10 +33,9 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@balena/lint": "^5.1.0",
-    "@types/bluebird": "^3.5.32",
-    "@types/lodash": "^4.14.157",
     "@types/mime": "^2.0.2",
     "@types/mkdirp": "^1.0.1",
+    "@types/node": "^10.17.26",
     "@types/rimraf": "^3.0.0",
     "coffeescript": "^1.12.7",
     "gulp-coffeelint": "^0.6.0",
@@ -53,8 +52,6 @@
   },
   "dependencies": {
     "balena-sdk": "^14.1.0",
-    "bluebird": "^3.7.2",
-    "lodash": "^4.17.15",
     "mime": "^2.4.6",
     "mkdirp": "^1.0.4",
     "rimraf": "^3.0.2"
