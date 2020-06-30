@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+# v7.0.1
+## (2020-06-30)
+
+* Fix fs.promises reference [Pagan Gazzard]
+
 # v7.0.0
 ## (2020-06-30)
 
