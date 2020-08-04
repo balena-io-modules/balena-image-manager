@@ -1,173 +1,183 @@
 - commits:
-  - author: Pagan Gazzard
-    body: Update balena-sdk from 14.1.0 to 15.2.1
-    footers:
-      change-type: patch
-    hash: 23d122452db8387f612f783e3c58858dd61f7d37
-    subject: Update balena-sdk to 15.x
-  date: "2020-08-04T13:35:17Z"
+    - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
+      hash: dedceb6c3c7db3f853bb1c9cb5816cd3c23dd4cf
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Pagan Gazzard
+      nested: []
+  version: 7.0.3
+  date: 2020-08-04T14:20:19.868Z
+- commits:
+    - author: Pagan Gazzard
+      body: Update balena-sdk from 14.1.0 to 15.2.1
+      footers:
+        change-type: patch
+      hash: 23d122452db8387f612f783e3c58858dd61f7d37
+      subject: Update balena-sdk to 15.x
+  date: '2020-08-04T13:35:17Z'
   version: 7.0.2
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 00a4edb98bd2439e0ce77dcede3ca583a90f8327
-    subject: Fix fs.promises reference
-  - author: Pagan Gazzard
-    body: ""
-    hash: 49f3874a06fcc2214ed1e63d0bc38f419428c7ef
-    subject: Fix tests stubbing
-  date: "2020-06-30T18:11:52Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 00a4edb98bd2439e0ce77dcede3ca583a90f8327
+      subject: Fix fs.promises reference
+    - author: Pagan Gazzard
+      body: ''
+      hash: 49f3874a06fcc2214ed1e63d0bc38f419428c7ef
+      subject: Fix tests stubbing
+  date: '2020-06-30T18:11:52Z'
   version: 7.0.1
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: major
-    hash: 0430d1f1f98c038b47c00df2cd492fe7678f5deb
-    subject: Convert to type-checked javascript
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: major
-    hash: 5ec370e7f1c3550041291270106297c5a5548919
-    subject: Update to generating es2018
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: major
-    hash: 0abf1db063426390caa55e8dca566e9980d22137
-    subject: Update to balena-sdk 14.x
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: major
-    hash: b9484058fc22dc12a2626f5c0690e07036114c44
-    subject: Switch to returning native promises
-  date: "2020-06-30T17:45:04Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: major
+      hash: 0430d1f1f98c038b47c00df2cd492fe7678f5deb
+      subject: Convert to type-checked javascript
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: major
+      hash: 5ec370e7f1c3550041291270106297c5a5548919
+      subject: Update to generating es2018
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: major
+      hash: 0abf1db063426390caa55e8dca566e9980d22137
+      subject: Update to balena-sdk 14.x
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: major
+      hash: b9484058fc22dc12a2626f5c0690e07036114c44
+      subject: Switch to returning native promises
+  date: '2020-06-30T17:45:04Z'
   version: 7.0.0
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: 17af527b84d93cc40006ff6003cf96e4da373065
-    subject: Update dependencies
-  date: "2020-03-04T14:52:11Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: 17af527b84d93cc40006ff6003cf96e4da373065
+      subject: Update dependencies
+  date: '2020-03-04T14:52:11Z'
   version: 6.1.2
 - commits:
-  - author: Pagan Gazzard
-    body: ""
-    footers:
-      change-type: patch
-    hash: d0413d7d9d1c3e19a89192fbe09b5549d2210097
-    subject: Update dependencies and repo links
-  date: "2020-01-24T18:26:27Z"
+    - author: Pagan Gazzard
+      body: ''
+      footers:
+        change-type: patch
+      hash: d0413d7d9d1c3e19a89192fbe09b5549d2210097
+      subject: Update dependencies and repo links
+  date: '2020-01-24T18:26:27Z'
   version: 6.1.1
 - commits:
-  - author: Thodoris Greasidis
-    body: ""
-    footers:
-      change-type: minor
-      resolves: '#44'
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: 9a22779178f84d8c365de2499f256e2a5d732fa5
-    subject: Bump balena-sdk to v12.12.0 to stop using image maker endpoints
-  - author: Thodoris Greasidis
-    body: |-
-      Bumping to gupl v4 wasn't trivial. Moreover it feels
-      that we should better invest on refactoring to TS and
-      drop gulp in favor of npm scripts, just like we do in
-      other modules.
-    footers:
-      change-type: patch
-      signed-off-by: Thodoris Greasidis <thodoris@balena.io>
-    hash: c2618f4e55eacc79e1ed9883d1560c0d5009e905
-    subject: '.travis.yml: Limit testing up to node v10 since gulp doesn''t work on
-      v12'
-  date: "2019-09-30T12:21:24Z"
+    - author: Thodoris Greasidis
+      body: ''
+      footers:
+        change-type: minor
+        resolves: '#44'
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: 9a22779178f84d8c365de2499f256e2a5d732fa5
+      subject: Bump balena-sdk to v12.12.0 to stop using image maker endpoints
+    - author: Thodoris Greasidis
+      body: |-
+        Bumping to gupl v4 wasn't trivial. Moreover it feels
+        that we should better invest on refactoring to TS and
+        drop gulp in favor of npm scripts, just like we do in
+        other modules.
+      footers:
+        change-type: patch
+        signed-off-by: Thodoris Greasidis <thodoris@balena.io>
+      hash: c2618f4e55eacc79e1ed9883d1560c0d5009e905
+      subject: '.travis.yml: Limit testing up to node v10 since gulp doesn''t work on v12'
+  date: '2019-09-30T12:21:24Z'
   version: 6.1.0
 - commits:
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: minor
-      signed-off-by: Tim Perry <tim@balena.io>
-    hash: 761e72de7d3ae980d1aa2bfc6e5172f12bb90ad8
-    subject: Rename everything 'resin' to 'balena'
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: major
-    hash: ac4c4c0380795dea0116b77d2b5bd2a38b635ca1
-    subject: Drop support for Node 4
-  date: "2018-10-29T20:06:52Z"
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: minor
+        signed-off-by: Tim Perry <tim@balena.io>
+      hash: 761e72de7d3ae980d1aa2bfc6e5172f12bb90ad8
+      subject: Rename everything 'resin' to 'balena'
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: major
+      hash: ac4c4c0380795dea0116b77d2b5bd2a38b635ca1
+      subject: Drop support for Node 4
+  date: '2018-10-29T20:06:52Z'
   version: 6.0.0
 - commits:
-  - author: Tim Perry
-    body: |-
-      Settings should now be configured using resinSdk.setSharedOptions
-      process-wide, rather than doing so with resin-settings-client.
-    footers:
-      change-type: major
-    hash: 0dedeaca469de39b330291473ef8be5861e16e31
-    subject: '*BREAKING*: Upgrade to resin-sdk using fromSharedOptions'
-  - author: Tim Perry
-    body: ""
-    footers:
-      change-type: patch
-    hash: 38558bf7aff985a8504e592d88b5e4a09cd8d2af
-    subject: Ensure that .get for a specific version always uses exactly that version
-  date: "2017-10-17T19:14:46Z"
+    - author: Tim Perry
+      body: |-
+        Settings should now be configured using resinSdk.setSharedOptions
+        process-wide, rather than doing so with resin-settings-client.
+      footers:
+        change-type: major
+      hash: 0dedeaca469de39b330291473ef8be5861e16e31
+      subject: '*BREAKING*: Upgrade to resin-sdk using fromSharedOptions'
+    - author: Tim Perry
+      body: ''
+      footers:
+        change-type: patch
+      hash: 38558bf7aff985a8504e592d88b5e4a09cd8d2af
+      subject: Ensure that .get for a specific version always uses exactly that version
+  date: '2017-10-17T19:14:46Z'
   version: 5.0.0
 - commits:
-  - author: Tim Perry
-    body: ""
-    hash: 09c5f79088706e6c3c686007243b7a29eab83682
-    subject: Don't persist downloads to the cache until they complete
-  - author: Tim Perry
-    body: ""
-    hash: 63600fbf1a60121a49cb023767d00bfb71c21c37
-    subject: Remove cache inprogress images on error
-  date: "2017-10-05T18:37:32Z"
+    - author: Tim Perry
+      body: ''
+      hash: 09c5f79088706e6c3c686007243b7a29eab83682
+      subject: Don't persist downloads to the cache until they complete
+    - author: Tim Perry
+      body: ''
+      hash: 63600fbf1a60121a49cb023767d00bfb71c21c37
+      subject: Remove cache inprogress images on error
+  date: '2017-10-05T18:37:32Z'
   version: 4.1.2
 - commits:
-  - author: Tim Perry
-    body: ""
-    hash: 37e73bea1b51e269d65cb6cad8af416f82da2fc9
-    subject: Handle non-semver OS versions
-  date: "2017-04-03T13:45:22Z"
+    - author: Tim Perry
+      body: ''
+      hash: 37e73bea1b51e269d65cb6cad8af416f82da2fc9
+      subject: Handle non-semver OS versions
+  date: '2017-04-03T13:45:22Z'
   version: 4.1.1
 - commits:
-  - author: Eugene Mirotin
-    body: ""
-    hash: 18f648bed13f9677aef7c7484e46d39a6a45f7f1
-    subject: slightly improve docs
-  - author: Eugene Mirotin
-    body: ""
-    hash: ab80ece4e59cf5b907b4df1d6b7060a8c98d0ed2
-    subject: support for versions throughout the library
-  - author: Eugene Mirotin
-    body: ""
-    hash: 8deed645351c2f5e4d5d9e3bf8c0f961bf17f738
-    subject: add the CS generation header
-  date: "2017-03-22T22:14:20Z"
+    - author: Eugene Mirotin
+      body: ''
+      hash: 18f648bed13f9677aef7c7484e46d39a6a45f7f1
+      subject: slightly improve docs
+    - author: Eugene Mirotin
+      body: ''
+      hash: ab80ece4e59cf5b907b4df1d6b7060a8c98d0ed2
+      subject: support for versions throughout the library
+    - author: Eugene Mirotin
+      body: ''
+      hash: 8deed645351c2f5e4d5d9e3bf8c0f961bf17f738
+      subject: add the CS generation header
+  date: '2017-03-22T22:14:20Z'
   version: 4.1.0
 - commits:
-  - author: Tim Perry
-    body: ""
-    hash: e32cc817825826daf8e25ccf66f3b272db0b9b16
-    subject: Move to preconfigured Resin-SDK
-  - author: Tim Perry
-    body: ""
-    hash: d180a3b60709b1c987bb39b452b08bbb3ff2fbf9
-    subject: Only support Node 4+
-  - author: Juan Cruz Viotti
-    body: ""
-    footers:
-      signed-off-by: Juan Cruz Viotti <jviottidc@gmail.com>
-    hash: 38bd7d8f0b0de21abb8d2da4271eab6c6d20462a
-    subject: Upgrade resin-sdk to v5.3.3
-  date: "2017-01-24T14:12:46Z"
+    - author: Tim Perry
+      body: ''
+      hash: e32cc817825826daf8e25ccf66f3b272db0b9b16
+      subject: Move to preconfigured Resin-SDK
+    - author: Tim Perry
+      body: ''
+      hash: d180a3b60709b1c987bb39b452b08bbb3ff2fbf9
+      subject: Only support Node 4+
+    - author: Juan Cruz Viotti
+      body: ''
+      footers:
+        signed-off-by: Juan Cruz Viotti <jviottidc@gmail.com>
+      hash: 38bd7d8f0b0de21abb8d2da4271eab6c6d20462a
+      subject: Upgrade resin-sdk to v5.3.3
+  date: '2017-01-24T14:12:46Z'
   version: 4.0.2
