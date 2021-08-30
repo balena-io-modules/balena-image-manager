@@ -54,6 +54,7 @@
     "balena-sdk": "^15.2.1",
     "mime": "^2.4.6",
     "mkdirp": "^1.0.4",
+    "readable-stream-clone": "0.0.7",
     "rimraf": "^3.0.2"
   }
 }
