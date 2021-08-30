@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 7.0.4 - 2021-08-30
+
+* Clone the incoming image stream before writing to disk [Kyle Harding]
+
 ## 7.0.3 - 2020-08-04
 
 * Add .versionbot/CHANGELOG.yml for nested changelogs [Pagan Gazzard]

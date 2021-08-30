@@ -1,4 +1,19 @@
 - commits:
+    - subject: Clone the incoming image stream before writing to disk
+      hash: c8b3b3644eb4c9d841051542b2dd24f05ceee2d9
+      body: |
+        This should prevent backpressure and out-of-sync disk write
+        speeds from backing up the entire pipeline and killing the stream.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 7.0.4
+  date: 2021-08-30T18:19:00.073Z
+- commits:
     - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
       hash: dedceb6c3c7db3f853bb1c9cb5816cd3c23dd4cf
       body: ''
