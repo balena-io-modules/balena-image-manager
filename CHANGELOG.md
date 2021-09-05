@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 7.1.0 - 2021-09-05
+
+* Update balena sdk [Zane Hitchcox]
+
 ## 7.0.3 - 2020-08-04
 
 * Add .versionbot/CHANGELOG.yml for nested changelogs [Pagan Gazzard]
