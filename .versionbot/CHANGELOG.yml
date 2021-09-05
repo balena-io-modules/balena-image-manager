@@ -1,4 +1,22 @@
 - commits:
+    - subject: Update balena sdk
+      hash: 19bbb7fdc13d0ac3344b5cd42d56490a06861f38
+      body: >
+        Fixes [EOF zlib
+        issue](https://github.com/balena-io/balena-cli/issues/2152 ) per
+        [@klutchell 's balena-request
+        fix](https://github.com/balena-io-modules/balena-request/pull/156).
+
+
+        See https://github.com/madler/zlib/blob/master/FAQ#L33
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Zane Hitchcox
+      nested: []
+  version: 7.1.0
+  date: 2021-09-05T20:09:44.861Z
+- commits:
     - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
       hash: dedceb6c3c7db3f853bb1c9cb5816cd3c23dd4cf
       body: ''
