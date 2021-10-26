@@ -1,4 +1,17 @@
 - commits:
+    - subject: Prevent the cacheStream from closing the other passthrough
+      hash: fd11d7e66915fefc8356dc3f8ac6b9ac3188be54
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 7.0.4
+  date: 2021-10-26T13:53:57.049Z
+- commits:
     - subject: Add .versionbot/CHANGELOG.yml for nested changelogs
       hash: dedceb6c3c7db3f853bb1c9cb5816cd3c23dd4cf
       body: ''
