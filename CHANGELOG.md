@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 7.1.0 - 2021-11-18
+
+* Add support for balenaOS ESR versions [Paulo Castro]
+
 ## 7.0.4 - 2021-10-26
 
 * Prevent the cacheStream from closing the other passthrough [Kyle Harding]

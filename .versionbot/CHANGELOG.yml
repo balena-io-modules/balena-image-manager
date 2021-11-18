@@ -1,4 +1,15 @@
 - commits:
+    - subject: Add support for balenaOS ESR versions
+      hash: bffd86d4bb4f3641349b2c445dcb4006436f0da7
+      body: ''
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Paulo Castro
+      nested: []
+  version: 7.1.0
+  date: 2021-11-18T21:04:11.757Z
+- commits:
     - subject: Prevent the cacheStream from closing the other passthrough
       hash: fd11d7e66915fefc8356dc3f8ac6b9ac3188be54
       body: ''
