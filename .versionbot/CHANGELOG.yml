@@ -1,4 +1,15 @@
 - commits:
+    - subject: Export utils.isESR function for balena-cli use
+      hash: 7e56116fa06dd1c2a5f7fb2b1778e8329acb6cc2
+      body: ''
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Paulo Castro
+      nested: []
+  version: 7.1.1
+  date: 2021-12-09T16:48:23.796Z
+- commits:
     - subject: Add support for balenaOS ESR versions
       hash: bffd86d4bb4f3641349b2c445dcb4006436f0da7
       body: ''

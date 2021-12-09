@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 7.1.1 - 2021-12-09
+
+* Export utils.isESR function for balena-cli use [Paulo Castro]
+
 ## 7.1.0 - 2021-11-18
 
 * Add support for balenaOS ESR versions [Paulo Castro]
