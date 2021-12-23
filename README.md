@@ -31,12 +31,12 @@ Documentation
 
 
 * [manager](#module_manager)
-    * [.get(deviceType, versionOrRange)](#module_manager.get) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
+    * [.get(deviceType, versionOrRange, options)](#module_manager.get) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
     * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
 
 <a name="module_manager.get"></a>
 
-### manager.get(deviceType, versionOrRange) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
+### manager.get(deviceType, versionOrRange, options) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
 This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io-modules/balena-settings-client).
 
 **Kind**: static method of [<code>manager</code>](#module_manager)  
@@ -48,6 +48,8 @@ This function saves a copy of the downloaded image in the cache directory settin
 | --- | --- | --- |
 | deviceType | <code>String</code> | device type slug or alias |
 | versionOrRange | <code>String</code> | can be one of * the exact version number, in which case it is used if the version is supported, or the promise is rejected, * a [semver](https://www.npmjs.com/package/semver)-compatible range specification, in which case the most recent satisfying version is used if it exists, or the promise is rejected, * `'latest'` in which case the most recent version is used, including pre-releases, * `'recommended'` in which case the recommended version is used, i.e. the most recent version excluding pre-releases, the promise is rejected if only pre-release versions are available, * `'default'` in which case the recommended version is used if available, or `latest` is used otherwise. Defaults to `'latest'`. |
+| options | <code>Object</code> |  |
+| options?.developmentMode | <code>boolean</code> |  |
 
 **Example**  
 ```js
