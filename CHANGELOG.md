@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 8.0.1 - 2022-07-13
+
+* Update typescript to fix the tests [Thodoris Greasidis]
+* Update README part for linting [Thodoris Greasidis]
+
 ## 8.0.0 - 2021-12-23
 
 * manager.get: Add 'options' to allow selection of OS development variant [Paulo Castro]
