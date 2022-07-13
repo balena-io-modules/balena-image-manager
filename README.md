@@ -89,10 +89,10 @@ Contribute
 - Issue Tracker: [github.com/balena-io-modules/balena-image-manager/issues](https://github.com/balena-io-modules/balena-image-manager/issues)
 - Source Code: [github.com/balena-io-modules/balena-image-manager](https://github.com/balena-io-modules/balena-image-manager)
 
-Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
+Before submitting a PR, please make sure that you include tests, and that linting runs without any warning:
 
 ```sh
-$ gulp lint
+$ npm run lint
 ```
 
 License
