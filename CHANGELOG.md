@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 8.0.2 - 2022-09-22
+
+* Drop the .travis.yml [Thodoris Greasidis]
+* Replace balenaCI with flowzone [Thodoris Greasidis]
+
 ## 8.0.1 - 2022-07-13
 
 * Update typescript to fix the tests [Thodoris Greasidis]

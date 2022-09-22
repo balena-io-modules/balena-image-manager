@@ -1,4 +1,24 @@
 - commits:
+    - subject: Drop the .travis.yml
+      hash: 3915fa10d02335c7d97a89182b135dd41f54d64c
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Replace balenaCI with flowzone
+      hash: d1def00d3a52ce22242da96764ea42d674138e1a
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+  version: 8.0.2
+  title: ""
+  date: 2022-09-22T22:41:39.467Z
+- commits:
     - subject: Update typescript to fix the tests
       hash: 591c16eb08513dd8ee6383f46ecc354a4b0e9d0f
       body: ""
