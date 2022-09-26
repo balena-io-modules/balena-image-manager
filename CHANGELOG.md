@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 8.0.3 - 2022-09-26
+
+* Delete redundant .resinci.yml [Thodoris Greasidis]
+
 ## 8.0.2 - 2022-09-22
 
 * Drop the .travis.yml [Thodoris Greasidis]
