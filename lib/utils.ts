@@ -39,18 +39,6 @@ export async function getFileCreatedDate(filePath: string) {
 }
 
 /**
- * @summary Get the device type manifest
- * @function
- * @protected
- *
- * @param {String} deviceType - device type slug or alias
- * @returns {Promise<Object>} device type manifest
- */
-export function getDeviceType(deviceType: string) {
-	return balena.models.device.getManifestBySlug(deviceType);
-}
-
-/**
  * @summary Get the most recent compatible version
  * @function
  * @protected

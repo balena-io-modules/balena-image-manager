@@ -26,12 +26,10 @@ import * as utils from './utils';
 export { isESR, resolveVersion, validateVersion } from './utils';
 
 const balena = fromSharedOptions();
-
-const doDownload = async (deviceType: string, version: string, options: Parameters<typeof balena.models.os.download>[2]) => {
+type DownloadConfig = NonNullable<Parameters<typeof balena.models.os.download>[0]>;
+const doDownload = async (options: DownloadConfig) => {
 	const imageStream = await balena.models.os.download(
-		deviceType,
-		version,
-		options,
+		options
 	);
 	// Piping to a PassThrough stream is needed to be able
 	// to then pipe the stream to multiple destinations.
@@ -39,7 +37,7 @@ const doDownload = async (deviceType: string, version: string, options: Paramete
 	imageStream.pipe(pass);
 
 	// Save a copy of the image in the cache
-	const cacheStream = await cache.getImageWritableStream(deviceType, version);
+	const cacheStream = await cache.getImageWritableStream(options.deviceType, options.version);
 
 	pass.pipe(cacheStream, { end: false });
 	pass.on('end', cacheStream.persistCache);
@@ -94,7 +92,7 @@ const doDownload = async (deviceType: string, version: string, options: Paramete
  * manager.get('raspberry-pi', 'default').then (stream) ->
  * 	stream.pipe(fs.createWriteStream('foo/bar.img'))
  */
-export async function get(deviceType: string, versionOrRange: string, options: Parameters<typeof balena.models.os.download>[2] = {}) {
+export async function get(deviceType: string, versionOrRange: string, options: Omit<DownloadConfig, 'deviceType'|'version'> = {}) {
 	if (versionOrRange == null) {
 		versionOrRange = 'latest';
 	}
@@ -102,7 +100,7 @@ export async function get(deviceType: string, versionOrRange: string, options: P
 	const isFresh = await cache.isImageFresh(deviceType, version);
 	const $stream = isFresh
 		? await cache.getImage(deviceType, version)
-		: await doDownload(deviceType, version, options);
+		: await doDownload({...options,deviceType, version});
 	// schedule the 'version' event for the next iteration of the event loop
 	// so that callers have a chance of adding an event handler
 	setImmediate(() =>

@@ -55,7 +55,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "balena-sdk": "^16.8.0",
+    "balena-sdk": "^17.0.0",
     "mime": "^2.4.6",
     "mkdirp": "^1.0.4",
     "rimraf": "^3.0.2"

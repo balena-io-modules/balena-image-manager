@@ -43,7 +43,7 @@ export const getImagePath = async (deviceType, version) => {
 	await utils.validateVersion(version);
 	const [cacheDirectory, deviceTypeInfo] = await Promise.all([
 		balena.settings.get('cacheDirectory'),
-		utils.getDeviceType(deviceType),
+		balena.models.config.getDeviceTypeManifestBySlug(deviceType),
 	]);
 	const extension = deviceTypeInfo.yocto.fstype === 'zip' ? 'zip' : 'img';
 	return path.join(cacheDirectory, `${deviceType}-v${version}.${extension}`);
