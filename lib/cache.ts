@@ -108,10 +108,8 @@ export async function getImage(deviceType, version) {
 	return stream;
 }
 
-export type ImageWritableStream = ReturnType<typeof fs.createWriteStream> & Record<
-   'persistCache' | 'removeCache',
-   () => void
->;
+export type ImageWritableStream = ReturnType<typeof fs.createWriteStream> &
+	Record<'persistCache' | 'removeCache', () => void>;
 /**
  * @summary Get a writable stream for an image in the cache
  * @function

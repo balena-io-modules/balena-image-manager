@@ -49,7 +49,10 @@ export async function getFileCreatedDate(filePath: string) {
  * See `manager.get` for the detailed explanation.
  * @returns {Promise<String>} the most recent compatible version.
  */
-export async function resolveVersion(deviceType: string, versionOrRange: string) {
+export async function resolveVersion(
+	deviceType: string,
+	versionOrRange: string,
+) {
 	const version = await balena.models.os.getMaxSatisfyingVersion(
 		deviceType,
 		versionOrRange,
