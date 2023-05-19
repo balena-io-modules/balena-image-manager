@@ -31,15 +31,15 @@ Documentation
 
 
 * [manager](#module_manager)
-    * [.get(deviceType, versionOrRange, options)](#module_manager.get) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
-    * [.cleanCache()](#module_manager.cleanCache) ⇒ <code>Promise</code>
+    * [~get(deviceType, versionOrRange, options)](#module_manager..get) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
+    * [~cleanCache()](#module_manager..cleanCache) ⇒ <code>Promise</code>
 
-<a name="module_manager.get"></a>
+<a name="module_manager..get"></a>
 
-### manager.get(deviceType, versionOrRange, options) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
+### manager~get(deviceType, versionOrRange, options) ⇒ <code>Promise.&lt;NodeJS.ReadableStream&gt;</code>
 This function saves a copy of the downloaded image in the cache directory setting specified in [balena-settings-client](https://github.com/balena-io-modules/balena-settings-client).
 
-**Kind**: static method of [<code>manager</code>](#module_manager)  
+**Kind**: inner method of [<code>manager</code>](#module_manager)  
 **Summary**: Get a device operating system image  
 **Returns**: <code>Promise.&lt;NodeJS.ReadableStream&gt;</code> - image readable stream  
 **Access**: public  
@@ -56,12 +56,12 @@ This function saves a copy of the downloaded image in the cache directory settin
 manager.get('raspberry-pi', 'default').then (stream) ->
 	stream.pipe(fs.createWriteStream('foo/bar.img'))
 ```
-<a name="module_manager.cleanCache"></a>
+<a name="module_manager..cleanCache"></a>
 
-### manager.cleanCache() ⇒ <code>Promise</code>
+### manager~cleanCache() ⇒ <code>Promise</code>
 Useful to manually force an image to be re-downloaded.
 
-**Kind**: static method of [<code>manager</code>](#module_manager)  
+**Kind**: inner method of [<code>manager</code>](#module_manager)  
 **Summary**: Clean the saved images cache  
 **Access**: public  
 **Example**  
@@ -89,10 +89,10 @@ Contribute
 - Issue Tracker: [github.com/balena-io-modules/balena-image-manager/issues](https://github.com/balena-io-modules/balena-image-manager/issues)
 - Source Code: [github.com/balena-io-modules/balena-image-manager](https://github.com/balena-io-modules/balena-image-manager)
 
-Before submitting a PR, please make sure that you include tests, and that linting runs without any warning:
+Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
 
 ```sh
-$ npm run lint
+$ gulp lint
 ```
 
 License
