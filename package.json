@@ -21,12 +21,11 @@
   },
   "scripts": {
     "build": "npx tsc && npm run readme",
-    "lint": "balena-lint -e js --typescript lib",
-    "lint-fix": "balena-lint -e js --typescript --fix lib",
+    "lint": "balena-lint lib",
+    "lint-fix": "balena-lint --fix lib",
     "pretest": "npm run build",
     "test": "mocha -r coffeescript/register tests/**/*.spec.coffee",
     "posttest": "npm run lint",
-    "prepublish": "require-npm4-to-publish",
     "prepare": "npm run build",
     "readme": "jsdoc2md --template doc/README.hbs build/manager.js > README.md"
   },
@@ -36,10 +35,10 @@
     "node": ">=16.0.0"
   },
   "devDependencies": {
-    "@balena/lint": "^5.1.0",
+    "@balena/lint": "^6.2.2",
     "@types/mime": "^2.0.3",
     "@types/mkdirp": "^1.0.1",
-    "@types/node": "^10.17.28",
+    "@types/node": "^14.18.47",
     "@types/rimraf": "^3.0.0",
     "coffeescript": "^1.12.7",
     "gulp-coffeelint": "^0.6.0",
@@ -49,10 +48,9 @@
     "mochainon": "^1.0.0",
     "mock-fs": "^4.12.0",
     "mockery": "^2.1.0",
-    "require-npm4-to-publish": "^1.0.0",
     "string-to-stream": "^1.1.1",
     "tmp": "0.0.31",
-    "typescript": "^4.7.4"
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "balena-sdk": "^17.0.0",
