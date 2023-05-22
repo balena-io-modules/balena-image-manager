@@ -32,7 +32,7 @@
   "author": "Balena Inc. (https://balena.io/)",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=16.0.0"
   },
   "devDependencies": {
     "@balena/lint": "^5.1.0",
