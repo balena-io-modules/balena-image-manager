@@ -27,7 +27,7 @@ export { isESR, resolveVersion, validateVersion } from './utils';
 
 const balena = fromSharedOptions();
 
-const doDownload = async (deviceType, version, options) => {
+const doDownload = async (deviceType: string, version: string, options: Parameters<typeof balena.models.os.download>[2]) => {
 	const imageStream = await balena.models.os.download(
 		deviceType,
 		version,
@@ -49,8 +49,9 @@ const doDownload = async (deviceType, version, options) => {
 	// instantly piped to `cacheStream`.
 	// The solution is to create yet another PassThrough stream,
 	// pipe to it and return the new stream instead.
-	const pass2 = new stream.PassThrough();
-	// @ts-ignore adding an extra prop
+	const pass2 = new stream.PassThrough() as stream.PassThrough & {
+		mime: string;
+	};
 	pass2.mime = imageStream.mime;
 	imageStream.on('progress', (state) => pass2.emit('progress', state));
 
@@ -93,7 +94,7 @@ const doDownload = async (deviceType, version, options) => {
  * manager.get('raspberry-pi', 'default').then (stream) ->
  * 	stream.pipe(fs.createWriteStream('foo/bar.img'))
  */
-export async function get(deviceType, versionOrRange, options = {}) {
+export async function get(deviceType: string, versionOrRange: string, options: Parameters<typeof balena.models.os.download>[2] = {}) {
 	if (versionOrRange == null) {
 		versionOrRange = 'latest';
 	}

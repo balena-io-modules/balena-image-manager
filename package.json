@@ -3,6 +3,7 @@
   "version": "8.0.3",
   "description": "Manage device base operating systems resources with caching support",
   "main": "build/manager.js",
+  "types": "build/manager.d.ts",
   "homepage": "https://github.com/balena-io-modules/balena-image-manager",
   "repository": {
     "type": "git",
@@ -27,7 +28,7 @@
     "posttest": "npm run lint",
     "prepublish": "require-npm4-to-publish",
     "prepare": "npm run build",
-    "readme": "jsdoc2md --template doc/README.hbs lib/manager.js > README.md"
+    "readme": "jsdoc2md --template doc/README.hbs build/manager.js > README.md"
   },
   "author": "Balena Inc. (https://balena.io/)",
   "license": "Apache-2.0",
