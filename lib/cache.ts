@@ -43,7 +43,7 @@ export const getImagePath = async (deviceType, version) => {
 	await utils.validateVersion(version);
 	const [cacheDirectory, deviceTypeInfo] = await Promise.all([
 		balena.settings.get('cacheDirectory'),
-		utils.getDeviceType(deviceType),
+		balena.models.config.getDeviceTypeManifestBySlug(deviceType),
 	]);
 	const extension = deviceTypeInfo.yocto.fstype === 'zip' ? 'zip' : 'img';
 	return path.join(cacheDirectory, `${deviceType}-v${version}.${extension}`);
@@ -100,13 +100,16 @@ export const isImageFresh = async (deviceType, version) => {
  */
 export async function getImage(deviceType, version) {
 	const imagePath = await getImagePath(deviceType, version);
-	const stream = fs.createReadStream(imagePath);
+	const stream = fs.createReadStream(imagePath) as ReturnType<
+		typeof fs.createReadStream
+	> & { mime: string };
 	// Default to application/octet-stream if we could not find a more specific mime type
-	// @ts-ignore adding an extra prop
 	stream.mime = mime.getType(imagePath) ?? 'application/octet-stream';
 	return stream;
 }
 
+export type ImageWritableStream = ReturnType<typeof fs.createWriteStream> &
+	Record<'persistCache' | 'removeCache', () => void>;
 /**
  * @summary Get a writable stream for an image in the cache
  * @function
@@ -129,16 +132,13 @@ export async function getImageWritableStream(deviceType, version) {
 
 	// Append .inprogress to streams, move them to the right location only on success
 	const inProgressPath = imagePath + '.inprogress';
-	const stream = fs.createWriteStream(inProgressPath);
+	const stream = fs.createWriteStream(inProgressPath) as ImageWritableStream;
 
 	// Call .isCompleted on the stream
-	// @ts-ignore adding an extra prop
 	stream.persistCache = () => fs.promises.rename(inProgressPath, imagePath);
 
-	// @ts-ignore adding an extra prop
 	stream.removeCache = () => fs.promises.unlink(inProgressPath);
 
-	// @ts-expect-error missing typings for the extra properties on the stream we return
 	return stream;
 }
 

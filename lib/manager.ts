@@ -26,20 +26,21 @@ import * as utils from './utils';
 export { isESR, resolveVersion, validateVersion } from './utils';
 
 const balena = fromSharedOptions();
-
-const doDownload = async (deviceType, version, options) => {
-	const imageStream = await balena.models.os.download(
-		deviceType,
-		version,
-		options,
-	);
+type DownloadConfig = NonNullable<
+	Parameters<typeof balena.models.os.download>[0]
+>;
+const doDownload = async (options: DownloadConfig) => {
+	const imageStream = await balena.models.os.download(options);
 	// Piping to a PassThrough stream is needed to be able
 	// to then pipe the stream to multiple destinations.
 	const pass = new stream.PassThrough();
 	imageStream.pipe(pass);
 
 	// Save a copy of the image in the cache
-	const cacheStream = await cache.getImageWritableStream(deviceType, version);
+	const cacheStream = await cache.getImageWritableStream(
+		options.deviceType,
+		options.version,
+	);
 
 	pass.pipe(cacheStream, { end: false });
 	pass.on('end', cacheStream.persistCache);
@@ -49,8 +50,9 @@ const doDownload = async (deviceType, version, options) => {
 	// instantly piped to `cacheStream`.
 	// The solution is to create yet another PassThrough stream,
 	// pipe to it and return the new stream instead.
-	const pass2 = new stream.PassThrough();
-	// @ts-ignore adding an extra prop
+	const pass2 = new stream.PassThrough() as stream.PassThrough & {
+		mime: string;
+	};
 	pass2.mime = imageStream.mime;
 	imageStream.on('progress', (state) => pass2.emit('progress', state));
 
@@ -93,7 +95,11 @@ const doDownload = async (deviceType, version, options) => {
  * manager.get('raspberry-pi', 'default').then (stream) ->
  * 	stream.pipe(fs.createWriteStream('foo/bar.img'))
  */
-export async function get(deviceType, versionOrRange, options = {}) {
+export async function get(
+	deviceType: string,
+	versionOrRange: string,
+	options: Omit<DownloadConfig, 'deviceType' | 'version'> = {},
+) {
 	if (versionOrRange == null) {
 		versionOrRange = 'latest';
 	}
@@ -101,7 +107,7 @@ export async function get(deviceType, versionOrRange, options = {}) {
 	const isFresh = await cache.isImageFresh(deviceType, version);
 	const $stream = isFresh
 		? await cache.getImage(deviceType, version)
-		: await doDownload(deviceType, version, options);
+		: await doDownload({ ...options, deviceType, version });
 	// schedule the 'version' event for the next iteration of the event loop
 	// so that callers have a chance of adding an event handler
 	setImmediate(() =>

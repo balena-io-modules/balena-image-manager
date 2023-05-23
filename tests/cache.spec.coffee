@@ -37,17 +37,17 @@ describe 'Cache:', ->
 			describe 'given valid slugs', ->
 
 				beforeEach ->
-					@getManifestBySlugStub = m.sinon.stub(balena.models.device, 'getManifestBySlug')
-					@getManifestBySlugStub.withArgs('raspberry-pi').returns Promise.resolve
+					@getDeviceTypeManifestBySlugStub = m.sinon.stub(balena.models.config, 'getDeviceTypeManifestBySlug')
+					@getDeviceTypeManifestBySlugStub.withArgs('raspberry-pi').returns Promise.resolve
 						yocto:
 							fstype: 'resin-sdcard'
 
-					@getManifestBySlugStub.withArgs('intel-edison').returns Promise.resolve
+					@getDeviceTypeManifestBySlugStub.withArgs('intel-edison').returns Promise.resolve
 						yocto:
 							fstype: 'zip'
 
 				afterEach ->
-					@getManifestBySlugStub.restore()
+					@getDeviceTypeManifestBySlugStub.restore()
 
 				it 'should eventually equal an absolute path', ->
 					cache.getImagePath('raspberry-pi', '1.2.3').then (imagePath) ->
@@ -77,13 +77,13 @@ describe 'Cache:', ->
 		describe 'given the raspberry-pi manifest', ->
 
 			beforeEach ->
-				@getManifestBySlugStub = m.sinon.stub(balena.models.device, 'getManifestBySlug')
-				@getManifestBySlugStub.returns Promise.resolve
+				@getDeviceTypeManifestBySlugStub = m.sinon.stub(balena.models.config, 'getDeviceTypeManifestBySlug')
+				@getDeviceTypeManifestBySlugStub.returns Promise.resolve
 					yocto:
 						fstype: 'balena-sdcard'
 
 			afterEach ->
-				@getManifestBySlugStub.restore()
+				@getDeviceTypeManifestBySlugStub.restore()
 
 			describe 'given the file does not exist', ->
 

@@ -26,28 +26,16 @@ const RESINOS_VERSION_REGEX = /v?\d+\.\d+\.\d+(\.rev\d+)?((\-|\+).+)?/;
  * @function
  * @protected
  *
- * @param {String} file - file path
+ * @param {String} filePath - file path
  * @returns {Promise<Date>} date since creation
  *
  * @example
  * utils.getFileCreatedDate('foo/bar').then (createdTime) ->
  * 	console.log("The file was created in #{createdTime}")
  */
-export async function getFileCreatedDate(file) {
-	const { ctime } = await fs.stat(file);
+export async function getFileCreatedDate(filePath: string) {
+	const { ctime } = await fs.stat(filePath);
 	return ctime;
-}
-
-/**
- * @summary Get the device type manifest
- * @function
- * @protected
- *
- * @param {String} deviceType - device type slug or alias
- * @returns {Promise<Object>} device type manifest
- */
-export function getDeviceType(deviceType) {
-	return balena.models.device.getManifestBySlug(deviceType);
 }
 
 /**
@@ -61,7 +49,10 @@ export function getDeviceType(deviceType) {
  * See `manager.get` for the detailed explanation.
  * @returns {Promise<String>} the most recent compatible version.
  */
-export async function resolveVersion(deviceType, versionOrRange) {
+export async function resolveVersion(
+	deviceType: string,
+	versionOrRange: string,
+) {
 	const version = await balena.models.os.getMaxSatisfyingVersion(
 		deviceType,
 		versionOrRange,
@@ -79,7 +70,7 @@ export async function resolveVersion(deviceType, versionOrRange) {
  *
  * @param {string} version Semver version. If invalid or range, return false.
  */
-export function isESR(version) {
+export function isESR(version: string) {
 	const match = version.match(/^v?(\d+)\.\d+\.\d+/);
 	const major = parseInt((match && match[1]) || '', 10);
 	return major >= 2018; // note: (NaN >= 2018) is false
@@ -94,7 +85,7 @@ export function isESR(version) {
  * @param {String} version - version number to validate
  * @returns {void} the most recent compatible version.
  */
-export function validateVersion(version) {
+export function validateVersion(version: string) {
 	if (!RESINOS_VERSION_REGEX.test(version)) {
 		throw new Error('Invalid version number');
 	}
