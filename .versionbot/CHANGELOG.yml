@@ -1,4 +1,65 @@
 - commits:
+    - subject: Drop .hound.yml
+      hash: d6055a616346aa2f017dfa791a20f0bb2a5a42ac
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Update dependencies
+      hash: 0131918d375a4e8bbfe23f497f8426db1f0ed500
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Update README.md
+      hash: 88d1b499ce5784c6daf9df5a305fcb2bff5d8416
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Update to balena-sdk 17.0.0
+      hash: 57bb914c68d2e35851700034e4f8d73e10df6227
+      body: |
+        Update to balena-sdk from 16.8.0 to 17.0.0
+      footer:
+        Change-type: major
+        change-type: major
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Convert to typescript an emit type declarations
+      hash: f540af7d9508897b6371afa649203e80a1e37e8c
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Require es2019 capable runtime
+      hash: ffbf5486aa5f082df091dd48e0c672b99f5860b8
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Thodoris Greasidis
+      nested: []
+    - subject: Drop support for Node.js v12 & v14
+      hash: d1e817215e7a632dcd557258074d3338948de63a
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Thodoris Greasidis
+      nested: []
+  version: 9.0.0
+  title: ""
+  date: 2023-05-23T10:00:55.424Z
+- commits:
     - subject: Delete redundant .resinci.yml
       hash: 040902fa9a870bcf1f5e1fd5d49fe1f9815dbe87
       body: ""

@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 9.0.0 - 2023-05-23
+
+* Drop .hound.yml [Thodoris Greasidis]
+* Update dependencies [Thodoris Greasidis]
+* Update README.md [Thodoris Greasidis]
+* Update to balena-sdk 17.0.0 [Thodoris Greasidis]
+* Convert to typescript an emit type declarations [Thodoris Greasidis]
+* Require es2019 capable runtime [Thodoris Greasidis]
+* Drop support for Node.js v12 & v14 [Thodoris Greasidis]
+
 ## 8.0.3 - 2022-09-26
 
 * Delete redundant .resinci.yml [Thodoris Greasidis]
