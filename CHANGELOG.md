@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 9.0.1 - 2023-07-13
+
+* patch: Update flowzone.yml [Kyle Harding]
+
 ## 9.0.0 - 2023-05-23
 
 * Drop .hound.yml [Thodoris Greasidis]

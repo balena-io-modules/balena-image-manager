@@ -1,6 +1,6 @@
 {
   "name": "balena-image-manager",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "Manage device base operating systems resources with caching support",
   "main": "build/manager.js",
   "types": "build/manager.d.ts",
@@ -59,6 +59,6 @@
     "rimraf": "^3.0.2"
   },
   "versionist": {
-    "publishedAt": "2023-05-23T10:00:55.810Z"
+    "publishedAt": "2023-07-13T18:52:31.866Z"
   }
 }
