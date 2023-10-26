@@ -1,4 +1,24 @@
 - commits:
+    - subject: Update @balena/lint
+      hash: 62f1e5f03b9036611b320ddb31192e500c7e16f8
+      body: Update @balena/lint from 6.2.2 to 7.2.0
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Otávio Jacobi
+      nested: []
+    - subject: Bump rimraf
+      hash: 9dd492010e0075ce31bcf313d02dafe17b4c902b
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Otávio Jacobi
+      nested: []
+  version: 9.0.3
+  title: ""
+  date: 2023-10-26T16:57:58.102Z
+- commits:
     - subject: Update to balena-sdk 18.0.0
       hash: 6a9cda4b43b6190794a39c4eeb9ec5f2f7a142c8
       body: Update balena-sdk from 17.0.0 to 18.0.0
