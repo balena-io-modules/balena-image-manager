@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [5.0.0] - 2017-10-17
 
+## 10.0.0 - 2023-10-26
+
+* Drop support for Node.js v16 [Otávio Jacobi]
+
 ## 9.0.3 - 2023-10-26
 
 * Update @balena/lint [Otávio Jacobi]

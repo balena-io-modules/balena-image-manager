@@ -1,4 +1,16 @@
 - commits:
+    - subject: Drop support for Node.js v16
+      hash: bda4345815baa3b145b6a72613a0a764ebb0a81d
+      body: ""
+      footer:
+        Change-type: major
+        change-type: major
+      author: Otávio Jacobi
+      nested: []
+  version: 10.0.0
+  title: ""
+  date: 2023-10-26T17:09:02.375Z
+- commits:
     - subject: Update @balena/lint
       hash: 62f1e5f03b9036611b320ddb31192e500c7e16f8
       body: Update @balena/lint from 6.2.2 to 7.2.0
