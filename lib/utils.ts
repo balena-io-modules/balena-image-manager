@@ -19,6 +19,7 @@ import { promises as fs } from 'fs';
 
 const balena = fromSharedOptions();
 
+// eslint-disable-next-line no-useless-escape
 const RESINOS_VERSION_REGEX = /v?\d+\.\d+\.\d+(\.rev\d+)?((\-|\+).+)?/;
 
 /**
