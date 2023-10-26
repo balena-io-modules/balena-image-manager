@@ -52,7 +52,7 @@
     "typescript": "^5.2.0"
   },
   "dependencies": {
-    "balena-sdk": "^18.0.0",
+    "balena-sdk": "^19.0.1",
     "mime": "^2.4.6",
     "mkdirp": "^1.0.4",
     "rimraf": "^5.0.5"
