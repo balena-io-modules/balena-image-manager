@@ -4,7 +4,7 @@ path = require('path')
 tmp = require('tmp')
 PassThrough = require('stream').PassThrough
 Promise = require('bluebird')
-rimraf = Promise.promisify(require('rimraf'))
+rimraf = require('rimraf').rimraf
 fs = Promise.promisifyAll(require('fs'))
 stringToStream = require('string-to-stream')
 
