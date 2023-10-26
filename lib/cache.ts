@@ -20,11 +20,9 @@ import { fromSharedOptions } from 'balena-sdk';
 import * as mime from 'mime';
 import * as path from 'path';
 import * as utils from './utils';
-import * as rimraf from 'rimraf';
-import { promisify } from 'util';
+import { rimraf } from 'rimraf';
 
 const balena = fromSharedOptions();
-const rimrafAsync = promisify(rimraf);
 
 /**
  * @summary Get path to image in cache
@@ -153,5 +151,5 @@ export async function getImageWritableStream(deviceType, version) {
  * cache.clean()
  */
 export async function clean() {
-	await rimrafAsync(await balena.settings.get('cacheDirectory'));
+	await rimraf(await balena.settings.get('cacheDirectory'));
 }

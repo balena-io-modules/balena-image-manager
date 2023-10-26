@@ -39,7 +39,6 @@
     "@types/mime": "^2.0.3",
     "@types/mkdirp": "^1.0.1",
     "@types/node": "^14.18.47",
-    "@types/rimraf": "^3.0.0",
     "coffeescript": "^1.12.7",
     "gulp-coffeelint": "^0.6.0",
     "gulp-util": "^3.0.8",
@@ -56,7 +55,7 @@
     "balena-sdk": "^18.0.0",
     "mime": "^2.4.6",
     "mkdirp": "^1.0.4",
-    "rimraf": "^3.0.2"
+    "rimraf": "^5.0.5"
   },
   "versionist": {
     "publishedAt": "2023-08-21T20:49:03.045Z"
